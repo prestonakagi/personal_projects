@@ -111,8 +111,17 @@ class Metalborn:
         else:
             print(f"Can't do neither simple and drag projectile!")
 
+"""
+The Rule for Arguments
+When organizing parameters in the child class constructor (__init__), follow this exact order: 
+Child positional arguments (no default)
+Parent positional arguments (no default)
+Parent default arguments
+Child default arguments
+"""
+
 class Mistborn(Metalborn):
-    # inherits all parent's (Metalborn's) attributes
+    # inherits all parent's (Metalborn's) attributes, by not listing any attribute for Mistborn class.
     
     def use_duralumin(self, type_of_metal_instance, metal_instance_current_speed, angle_degree, radius_for_drag, mass_person_for_drag):
         """
@@ -145,15 +154,46 @@ class Mistborn(Metalborn):
             print(f"Can't do neither simple and drag projectile!")
 
 class Twinborn(Metalborn):
-    def __init__(self, has_allo_steel=False, has_fero_steel=False, has_allo_iron=False, has_fero_iron=False, body_speed_potential=10.0):
+    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False, has_allo_steel=False, has_fero_steel=False, has_allo_iron=False, has_fero_iron=False, body_speed_potential=10.0, body_weight_potential=10.0):
+        # super() calls the Parent's __init__ to inherit Parent's specified attributes
+        super().__init__(initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False)
         self.has_allo_steel = has_allo_steel
         self.has_fero_steel = has_fero_steel
         self.has_allo_iron = has_allo_iron
         self.has_fero_iron = has_fero_iron
         self.body_speed_potential = body_speed_potential
-    
-    def store_speed(self):
-        pass
+
+    def store_weight(self, metal_fero_instance, weight_fraction_to_store=0.1):
+        # check if metal_fero_instance is an instance of FeroIron
+        if isinstance(metal_fero_instance, FeroIron):
+            # store weight in FeroIron instance, then subtract fraction from Twinborn body_weight_potential.
+            metal_fero_instance.weight_stored += self.body_weight_potential * weight_fraction_to_store
+            self.body_weight_potential -= self.body_weight_potential * weight_fraction_to_store
+        else:
+            print(f"({metal_fero_instance}), this is not FeroIron!")
+
+    def use_stored_weight(self, metal_fero_instance):
+        # check if metal_fero_instance is an instance of FeroIron
+        if isinstance(metal_fero_instance, FeroIron):
+            # take stored weight (float) in FeroIron instance and add to self.current_speed.
+            self.current_speed += metal_fero_instance.weight_stored
+
+    def store_speed(self, metal_fero_instance, speed_fraction_to_store=0.1):
+        # check if metal_fero_instance is an instance of FeroSteel
+        if isinstance(metal_fero_instance, FeroSteel):
+            # store speed in FeroSteel instance, then subtract fraction from Twinborn body_speed_potential.
+            metal_fero_instance.speed_stored += self.body_speed_potential * speed_fraction_to_store
+            self.body_speed_potential -= self.body_speed_potential * speed_fraction_to_store
+        else:
+            print(f"({metal_fero_instance}), this is not FeroSteel!")        
+
+    def use_stored_speed(self, metal_fero_instance):
+        # check if metal_fero_instance is an instance of FeroSteel
+        if isinstance(metal_fero_instance, FeroSteel):
+            # take stored speed in FeroSteel instance and add to self.current_speed.
+            self.current_speed += metal_fero_instance.speed_stored
+
+    # use burn and/or flare method(s) after use store method then use_stored___ method.
 
 # Make Parent Class of Metal and Child Classes of each type_and_metal.
 class Metal:
@@ -185,7 +225,11 @@ class FeroIron(Metal):
         # 2. Initialize the child-specific attributes
         self.weight_stored = weight_stored
 
-# TODO: AlloSteel, AlloIron
+class AlloSteel(Metal):
+    pass
+
+class AlloIron(Metal):
+    pass
 
 # Anchor class
 class Anchor:
@@ -193,7 +237,13 @@ class Anchor:
         self.anchor_mass = anchor_mass
         self.force_angle_degree = force_angle_degree
 
-# Make one instance of each class.
+# Make one instance of each class. Metals first.
+a_steel = AlloSteel(1.0, )
+kal = Mistborn(0.0, 0.0)
+wax = Twinborn(0.0, 0.0, has_allo_steel=True, has_fero_iron=True)
+wax_but_pull = Twinborn(0.0, 0.0, has_allo_iron=True, has_fero_iron=True)
+runner_push = Twinborn(0.0, 0.0, has_fero_steel=True, has_allo_steel=True)
+runner_pull = Twinborn(0.0, 0.0, has_fero_steel=True, has_allo_iron=True)
 
 # Allo steel set initial conditions, then show graph simulation
 
