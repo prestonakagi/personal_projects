@@ -39,27 +39,29 @@ class Metalborn:
         self.want_simple_projectile = want_simple_projectile
         self.want_drag_projectile = want_drag_projectile
 
-    def burn(self, type_of_metal_instance, anchor_instance, radius_for_drag, mass_person_for_drag):
+    def burn(self, type_of_metal_instance, anchor_instance, radius_for_drag):
         """
         Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
         Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
         """
         # use a fraction of metal's remaining mass. Subtract by one tenth of initial mass.
-        # every 1 g burned adds 1 m/s to current speed.
+        # burn multiplier is 1
+        # Then multiply burn multiplier to anchor mass to Metalborn body mass ratio and add to current speed.
         if type_of_metal_instance.remaining_mass < 0.1 * type_of_metal_instance.initial_mass:
             print(f"You are out of {type_of_metal_instance.name_of_metal}!")
         elif type_of_metal_instance.remaining_mass == 0.1 * type_of_metal_instance.initial_mass:
             print(f"Last jump!")
             if self.current_speed == self.initial_speed:
-                self.current_speed = self.initial_speed + (1 / 1 * (0.1* type_of_metal_instance.remaining_mass)) # 1 (m/s) / 1 (g) * (0.1 * remaining mass)
+                self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
             else: # for after first jump or already increased speed
-                self.current_speed += (1 / 1 *(0.1 * type_of_metal_instance.remaining_mass))
+                self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
             type_of_metal_instance.remaining_mass -= 0.1 * type_of_metal_instance.initial_mass
         elif type_of_metal_instance.remaining_mass > 0.1 * type_of_metal_instance.initial_mass:
             if self.current_speed == self.initial_speed:
-                self.current_speed = self.initial_speed + (1 / 1 * (0.1* type_of_metal_instance.remaining_mass)) # 1 (m/s) / 1 (g) * (0.1 * remaining mass)
-            else: # for after first jump or already increased speed
-                self.current_speed += (1 / 1 *(0.1 * type_of_metal_instance.remaining_mass))
+                self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
+            else: # for after already increased speed
+                self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
+            # update remaining mass of metal instance
             type_of_metal_instance.remaining_mass -= 0.1 * type_of_metal_instance.initial_mass
 
         # Run projectile functions
@@ -68,36 +70,37 @@ class Metalborn:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
         # run the drag projectile function
         elif self.want_simple_projectile == False and self.want_drag_projectile == True:
-            simulate_projectile_motion_with_drag(radius_for_drag, mass_person_for_drag, self.current_speed, anchor_instance.force_angle_degree)
+            simulate_projectile_motion_with_drag(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree)
         # run both simple and then drag projectile functions
         elif self.want_simple_projectile == True and self.want_drag_projectile == True:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
-            simulate_projectile_motion_with_drag(radius_for_drag, mass_person_for_drag, self.current_speed, anchor_instance.force_angle_degree)
+            simulate_projectile_motion_with_drag(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree)
         else:
             print(f"Can't do neither simple and drag projectile!")
 
-    def flare(self, type_of_metal_instance, anchor_instance, radius_for_drag, mass_person_for_drag):
+    def flare(self, type_of_metal_instance, anchor_instance, radius_for_drag):
         """
         Almost the same as burn(), but flare() multiplies metal usage and speed increase by 3 and 5, respectively.
         Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
         Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
         """
         # use a fraction of metal's remaining mass. Subtract by three tenths of initial mass.
-        # every 1 g burned adds 5 m/s to current speed.
+        # flare multiplier is 5
+        # Then multiply burn multiplier to anchor mass to Metalborn body mass ratio and add to current speed.
         if type_of_metal_instance.remaining_mass < 0.3 * type_of_metal_instance.initial_mass:
             print(f"You are out of {type_of_metal_instance.name_of_metal}!")
         elif type_of_metal_instance.remaining_mass == 0.3 * type_of_metal_instance.initial_mass:
             print(f"Last jump!")
             if self.current_speed == self.initial_speed:
-                self.current_speed = self.initial_speed + (5 / 1 * (0.3* type_of_metal_instance.remaining_mass)) # 5 (m/s) / 1 (g) * (0.3 * remaining mass)
+                self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
             else: # for after first jump or already increased speed
                 self.current_speed += (5 / 1 *(0.3 * type_of_metal_instance.remaining_mass))
             type_of_metal_instance.remaining_mass -= 0.3 * type_of_metal_instance.initial_mass
         elif type_of_metal_instance.remaining_mass > 0.3 * type_of_metal_instance.initial_mass:
             if self.current_speed == self.initial_speed:
-                self.current_speed = self.initial_speed + (5 / 1 * (0.3* type_of_metal_instance.remaining_mass)) # 5 (m/s) / 1 (g) * (0.3 * remaining mass)
-            else: # for after first jump or already increased speed
-                self.current_speed += (5 /1 *(0.3 * type_of_metal_instance.remaining_mass))
+                self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
+            else: # for after already increased speed
+                self.current_speed += (5 * anchor_instance.anchor_mass / self.body_mass)
             type_of_metal_instance.remaining_mass -= 0.3 * type_of_metal_instance.initial_mass
 
         # Run projectile functions
@@ -106,11 +109,11 @@ class Metalborn:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
         # run the drag projectile function
         elif self.want_simple_projectile == False and self.want_drag_projectile == True:
-            simulate_projectile_motion_with_drag(radius_for_drag, mass_person_for_drag, self.current_speed, anchor_instance.force_angle_degree)
+            simulate_projectile_motion_with_drag(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree)
         # run both simple and then drag projectile functions
         elif self.want_simple_projectile == True and self.want_drag_projectile == True:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
-            simulate_projectile_motion_with_drag(radius_for_drag, mass_person_for_drag, self.current_speed, anchor_instance.force_angle_degree)
+            simulate_projectile_motion_with_drag(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree)
         else:
             print(f"Can't do neither simple and drag projectile!")
 
@@ -126,19 +129,20 @@ Child default arguments
 class Mistborn(Metalborn):
     # inherits all parent's (Metalborn's) attributes, by not listing any attribute for Mistborn class.
     
-    def use_duralumin(self, type_of_metal_instance, anchor_instance, radius_for_drag, mass_person_for_drag):
+    def use_duralumin(self, type_of_metal_instance, anchor_instance, radius_for_drag):
         """
         Almost the same as burn(), but this uses all remaining mass of metal and speed increases by 10.
         Uses to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
         Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
         """
         # uses all of metal's remaining mass.
-        # every 1 g burned adds 10 m/s to current speed.
+        # flare multiplier is 10 times ratio of remaining metal mass to initial metal mass
+        # Then multiply flare multiplier to anchor mass to Metalborn body mass ratio and add to current speed.
         
         if type_of_metal_instance.remaining_mass <= 0:
             print(f"You are out of {type_of_metal_instance.name_of_metal}!")
         elif type_of_metal_instance.remaining_mass > 0:
-            self.current_speed += (10 / 1 * type_of_metal_instance.remaining_mass) # 10 (m/s) / 1 (g) * (0.3 * remaining mass)
+            self.current_speed += ((10 * type_of_metal_instance.remaining_mass / type_of_metal_instance.initial_mass) * anchor_instance.anchor_mass / self.body_mass)
         
         type_of_metal_instance.remaining_mass = 0.0
 
@@ -148,11 +152,11 @@ class Mistborn(Metalborn):
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
         # run the drag projectile function
         elif self.want_simple_projectile == False and self.want_drag_projectile == True:
-            simulate_projectile_motion_with_drag(radius_for_drag, mass_person_for_drag, self.current_speed, anchor_instance.force_angle_degree)
+            simulate_projectile_motion_with_drag(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree)
         # run both simple and then drag projectile functions
         elif self.want_simple_projectile == True and self.want_drag_projectile == True:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
-            simulate_projectile_motion_with_drag(radius_for_drag, mass_person_for_drag, self.current_speed, anchor_instance.force_angle_degree)
+            simulate_projectile_motion_with_drag(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree)
         else:
             print(f"Can't do neither simple and drag projectile!")
 
