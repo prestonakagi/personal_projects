@@ -283,3 +283,6 @@ Launch angle theta degrees input but convert to radians
 Gravity acceleration 9.81 m/s²
 
 """
+
+if __name__ == "__main__": # use for module
+    pass
