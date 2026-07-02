@@ -23,7 +23,13 @@ from projectile_motion_with_drag import simulate_projectile_motion_with_drag
 #-------------------------------------------------------
 
 # dictionary of Type_and_Metal:description_ of_power. Allo steel, Allo iron, Allo duralumin with one of the two other metals, Twin Crasher (Allo Steel, Fer iron), Twin Steel both (but no Compounding!), Twin Allo iron Fer Steel, Twin iron both.
-##hi
+metal_and_powers_dictionary = {"Allo Steel":"Pushes on nearby sources of metal",
+                               "Fero Steel":"Stores physical speed",
+                               "Allo Iron":"Pulls on nearby sources of metal",
+                               "Fero Iron":"Stores physical weight",
+                               "Allo Duralumin":"Quickly burns any remaining mass of a metal"
+                               }
+
 # Make Classes of Mistborn and Twinborn.
 class Metalborn:
     """
@@ -205,11 +211,12 @@ class Twinborn(Metalborn):
 # Make Parent Class of Metal and Child Classes of each type_and_metal.
 class Metal:
     # The initializer method (constructor) to set up properties
-    def __init__(self, initial_mass, remaining_mass, name_of_metal, power_description):
+    def __init__(self, initial_mass, remaining_mass, name_of_metal_key):
+        # name_of_metal_key is string of the name of the metal
         self.initial_mass = initial_mass
         self.remaining_mass = remaining_mass
-        self.name_of_metal = name_of_metal
-        self.power_description = power_description
+        self.name_of_metal = name_of_metal_key
+        self.power_description = metal_and_powers_dictionary[name_of_metal_key]
 
 """
 To use super() in a child class when the parent class has multiple attributes, 
@@ -217,17 +224,17 @@ you must pass all required parent arguments into super().__init__() inside
 the child's constructor, and then define the child's unique attributes.
 """
 class FeroSteel(Metal):
-    def __init__(self, initial_mass, remaining_mass, name_of_metal, power_description, speed_stored=0.0):
+    def __init__(self, initial_mass, remaining_mass, name_of_metal_key, speed_stored=0.0):
         # 1. Forward the required attributes to the parent constructor
-        super().__init__(initial_mass, remaining_mass, name_of_metal, power_description)
+        super().__init__(initial_mass, remaining_mass, name_of_metal_key)
 
         # 2. Initialize the child-specific attributes
         self.speed_stored = speed_stored
 
 class FeroIron(Metal):
-    def __init__(self, initial_mass, remaining_mass, name_of_metal, power_description, weight_stored=0.0):
+    def __init__(self, initial_mass, remaining_mass, name_of_metal_key, weight_stored=0.0):
         # 1. Forward the required attributes to the parent constructor
-        super().__init__(initial_mass, remaining_mass, name_of_metal, power_description)
+        super().__init__(initial_mass, remaining_mass, name_of_metal_key)
 
         # 2. Initialize the child-specific attributes
         self.weight_stored = weight_stored
