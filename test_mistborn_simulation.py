@@ -21,7 +21,19 @@ def test_metalborn_burn():
 
     expected_speed1 = anchor.anchor_mass / pusher1.body_mass
     assert pusher1.current_speed == expected_speed1
-    assert a_steel.remaining_mass == 0.9
+    assert a_steel.remaining_mass == 0.9 # TODO: on 01JUL26, AssertionError for some reason.
     
     # test if remaining metal mass will keep decreasing.
+    expected_speed2 = anchor.anchor_mass / pusher2.body_mass
+    assert pusher2.current_speed == expected_speed2
+    assert a_steel.remaining_mass == 0.8
 
+    expected_speed3 = anchor.anchor_mass / pusher3.body_mass
+    assert pusher3.current_speed == expected_speed3
+    assert a_steel.remaining_mass == 0.7
+
+    expected_speed4 = anchor.anchor_mass / pusher4.body_mass
+    assert pusher4.current_speed == expected_speed4
+    assert a_steel.remaining_mass == 0.6
+
+test_metalborn_burn()

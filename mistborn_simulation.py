@@ -61,14 +61,14 @@ class Metalborn:
                 self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
             else: # for after first jump or already increased speed
                 self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
-            type_of_metal_instance.remaining_mass -= 0.1 * type_of_metal_instance.initial_mass
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
         elif type_of_metal_instance.remaining_mass > 0.1 * type_of_metal_instance.initial_mass:
             if self.current_speed == self.initial_speed:
                 self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
             else: # for after already increased speed
                 self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
             # update remaining mass of metal instance
-            type_of_metal_instance.remaining_mass -= 0.1 * type_of_metal_instance.initial_mass
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
 
         # Run projectile functions
         # run the simple projectile function
@@ -101,13 +101,13 @@ class Metalborn:
                 self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
             else: # for after first jump or already increased speed
                 self.current_speed += (5 / 1 *(0.3 * type_of_metal_instance.remaining_mass))
-            type_of_metal_instance.remaining_mass -= 0.3 * type_of_metal_instance.initial_mass
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.3 * type_of_metal_instance.initial_mass)
         elif type_of_metal_instance.remaining_mass > 0.3 * type_of_metal_instance.initial_mass:
             if self.current_speed == self.initial_speed:
                 self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
             else: # for after already increased speed
                 self.current_speed += (5 * anchor_instance.anchor_mass / self.body_mass)
-            type_of_metal_instance.remaining_mass -= 0.3 * type_of_metal_instance.initial_mass
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.3 * type_of_metal_instance.initial_mass)
 
         # Run projectile functions
         # run the simple projectile function
@@ -181,7 +181,7 @@ class Twinborn(Metalborn):
         if isinstance(metal_fero_instance, FeroIron):
             # store weight in FeroIron instance, then subtract fraction from Twinborn body_weight_potential.
             metal_fero_instance.weight_stored += self.body_weight_potential * weight_fraction_to_store
-            self.body_weight_potential -= self.body_weight_potential * weight_fraction_to_store
+            self.body_weight_potential = self.body_weight_potential - (self.body_weight_potential * weight_fraction_to_store)
         else:
             print(f"({metal_fero_instance}), this is not FeroIron!")
 
@@ -196,7 +196,7 @@ class Twinborn(Metalborn):
         if isinstance(metal_fero_instance, FeroSteel):
             # store speed in FeroSteel instance, then subtract fraction from Twinborn body_speed_potential.
             metal_fero_instance.speed_stored += self.body_speed_potential * speed_fraction_to_store
-            self.body_speed_potential -= self.body_speed_potential * speed_fraction_to_store
+            self.body_speed_potential = self.body_speed_potential - (self.body_speed_potential * speed_fraction_to_store)
         else:
             print(f"({metal_fero_instance}), this is not FeroSteel!")        
 
