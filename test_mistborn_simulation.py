@@ -28,7 +28,7 @@ def test_metalborn_burn():
     pusher3.burn(a_steel, anchor, radius_for_drag=0.825)
     expected_speed3 = anchor.anchor_mass / pusher3.body_mass
     assert pusher3.current_speed == expected_speed3
-    assert a_steel.remaining_mass == 0.7  # TODO: 01JUL26, AssertionError
+    assert a_steel.remaining_mass == 0.7  # TODO: 01JUL26, AssertionError. NEED to round floats to one decimal place; otherwise binary approximations yield repeated calculation errors.
 
     pusher4.burn(a_steel, anchor, radius_for_drag=0.825)
     expected_speed4 = anchor.anchor_mass / pusher4.body_mass

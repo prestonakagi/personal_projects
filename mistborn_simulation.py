@@ -59,16 +59,22 @@ class Metalborn:
             print(f"Last jump!")
             if self.current_speed == self.initial_speed:
                 self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             else: # for after first jump or already increased speed
                 self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
+            round(type_of_metal_instance.remaining_mass, 1)
         elif type_of_metal_instance.remaining_mass > 0.1 * type_of_metal_instance.initial_mass:
             if self.current_speed == self.initial_speed:
                 self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             else: # for after already increased speed
                 self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             # update remaining mass of metal instance
             type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
+            round(type_of_metal_instance.remaining_mass, 1)
 
         # Run projectile functions
         # run the simple projectile function
@@ -99,15 +105,21 @@ class Metalborn:
             print(f"Last jump!")
             if self.current_speed == self.initial_speed:
                 self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             else: # for after first jump or already increased speed
                 self.current_speed += (5 / 1 *(0.3 * type_of_metal_instance.remaining_mass))
+                round(self.current_speed, 1)
             type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.3 * type_of_metal_instance.initial_mass)
+            round(type_of_metal_instance.remaining_mass, 1)
         elif type_of_metal_instance.remaining_mass > 0.3 * type_of_metal_instance.initial_mass:
             if self.current_speed == self.initial_speed:
                 self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             else: # for after already increased speed
                 self.current_speed += (5 * anchor_instance.anchor_mass / self.body_mass)
+                round(self.current_speed, 1)
             type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.3 * type_of_metal_instance.initial_mass)
+            round(type_of_metal_instance.remaining_mass, 1)
 
         # Run projectile functions
         # run the simple projectile function
@@ -149,7 +161,8 @@ class Mistborn(Metalborn):
             print(f"You are out of {type_of_metal_instance.name_of_metal}!")
         elif type_of_metal_instance.remaining_mass > 0:
             self.current_speed += ((10 * type_of_metal_instance.remaining_mass / type_of_metal_instance.initial_mass) * anchor_instance.anchor_mass / self.body_mass)
-        
+            round(self.current_speed, 1)
+
         type_of_metal_instance.remaining_mass = 0.0
 
         # Run projectile functions
@@ -181,7 +194,9 @@ class Twinborn(Metalborn):
         if isinstance(metal_fero_instance, FeroIron):
             # store weight in FeroIron instance, then subtract fraction from Twinborn body_weight_potential.
             metal_fero_instance.weight_stored += self.body_weight_potential * weight_fraction_to_store
+            round(metal_fero_instance.weight_stored, 1)
             self.body_weight_potential = self.body_weight_potential - (self.body_weight_potential * weight_fraction_to_store)
+            round(self.body_weight_potential, 1)
         else:
             print(f"({metal_fero_instance}), this is not FeroIron!")
 
@@ -190,13 +205,16 @@ class Twinborn(Metalborn):
         if isinstance(metal_fero_instance, FeroIron):
             # take stored weight (float) in FeroIron instance and add to self.current_speed.
             self.current_speed += metal_fero_instance.weight_stored
+            round(self.current_speed, 1)
 
     def store_speed(self, metal_fero_instance, speed_fraction_to_store=0.1):
         # check if metal_fero_instance is an instance of FeroSteel
         if isinstance(metal_fero_instance, FeroSteel):
             # store speed in FeroSteel instance, then subtract fraction from Twinborn body_speed_potential.
             metal_fero_instance.speed_stored += self.body_speed_potential * speed_fraction_to_store
+            round(metal_fero_instance.speed_stored, 1)
             self.body_speed_potential = self.body_speed_potential - (self.body_speed_potential * speed_fraction_to_store)
+            round(self.body_speed_potential, 1)
         else:
             print(f"({metal_fero_instance}), this is not FeroSteel!")        
 
@@ -205,6 +223,7 @@ class Twinborn(Metalborn):
         if isinstance(metal_fero_instance, FeroSteel):
             # take stored speed in FeroSteel instance and add to self.current_speed.
             self.current_speed += metal_fero_instance.speed_stored
+            round(self.current_speed, 1)
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
 
