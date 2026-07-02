@@ -89,3 +89,5 @@ def test_mistborn_use_duralumin():
     a_steel.remaining_mass = 1.0
 
 test_mistborn_use_duralumin()
+
+print("\nEnd testing")
