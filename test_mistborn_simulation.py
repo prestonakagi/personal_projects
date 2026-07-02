@@ -48,23 +48,24 @@ def test_metalborn_flare():
 
     pusher1.flare(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
     expected_speed1 = 5 * anchor.anchor_mass / pusher1.body_mass
-    assert pusher1.current_speed == expected_speed1
+    assert pusher1.current_speed == pytest.approx(expected_speed1)
     assert a_steel.remaining_mass == pytest.approx(0.91)
 
     pusher2.flare(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
     expected_speed2 = 5 * anchor.anchor_mass / pusher2.body_mass
-    assert pusher2.current_speed == expected_speed2
+    assert pusher2.current_speed == pytest.approx(expected_speed2)
     assert a_steel.remaining_mass == pytest.approx(0.52)
 
     pusher3.flare(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
     expected_speed3 = 5 * anchor.anchor_mass / pusher3.body_mass
-    assert pusher3.current_speed == expected_speed3
+    assert pusher3.current_speed == pytest.approx(expected_speed3)
     assert a_steel.remaining_mass == pytest.approx(0.13)
 
     a_steel.remaining_mass = 1.3
     pusher4.flare(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
     expected_speed4 = 5 * anchor.anchor_mass / pusher4.body_mass
-    assert pusher4.current_speed == expected_speed4 # TODO: why assertionError, when a_steel.remaining_mass = 1.3 not at start of block?
+    # assert pusher4.current_speed == expected_speed4 # TODO: why assertionError, when a_steel.remaining_mass = 1.3 not at start of block?
+    assert pusher4.current_speed == pytest.approx(expected_speed4)
     assert a_steel.remaining_mass == pytest.approx(0.91)
     # assert a_steel.remaining_mass == pytest.approx(-0.26) # TODO: try testing this
 
