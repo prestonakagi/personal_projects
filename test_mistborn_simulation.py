@@ -15,23 +15,22 @@ def test_metalborn_burn():
     pusher4 = Metalborn(initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
 
     pusher1.burn(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
-    pusher2.burn(a_steel, anchor, radius_for_drag=0.825)
-    pusher3.burn(a_steel, anchor, radius_for_drag=0.825)
-    pusher4.burn(a_steel, anchor, radius_for_drag=0.825)
-
     expected_speed1 = anchor.anchor_mass / pusher1.body_mass
     assert pusher1.current_speed == expected_speed1
-    assert a_steel.remaining_mass == 0.9 # TODO: on 01JUL26, AssertionError for some reason.
+    assert a_steel.remaining_mass == 0.9
     
     # test if remaining metal mass will keep decreasing.
+    pusher2.burn(a_steel, anchor, radius_for_drag=0.825)
     expected_speed2 = anchor.anchor_mass / pusher2.body_mass
     assert pusher2.current_speed == expected_speed2
     assert a_steel.remaining_mass == 0.8
 
+    pusher3.burn(a_steel, anchor, radius_for_drag=0.825)
     expected_speed3 = anchor.anchor_mass / pusher3.body_mass
     assert pusher3.current_speed == expected_speed3
-    assert a_steel.remaining_mass == 0.7
+    assert a_steel.remaining_mass == 0.7  # TODO: 01JUL26, AssertionError
 
+    pusher4.burn(a_steel, anchor, radius_for_drag=0.825)
     expected_speed4 = anchor.anchor_mass / pusher4.body_mass
     assert pusher4.current_speed == expected_speed4
     assert a_steel.remaining_mass == 0.6
