@@ -252,12 +252,12 @@ class Anchor:
         self.force_angle_degree = force_angle_degree
 
 # Make one instance of each class. Metals first.
-a_steel = AlloSteel(1.0, )
-kal = Mistborn(0.0, 0.0)
-wax = Twinborn(0.0, 0.0, has_allo_steel=True, has_fero_iron=True)
-wax_but_pull = Twinborn(0.0, 0.0, has_allo_iron=True, has_fero_iron=True)
-runner_push = Twinborn(0.0, 0.0, has_fero_steel=True, has_allo_steel=True)
-runner_pull = Twinborn(0.0, 0.0, has_fero_steel=True, has_allo_iron=True)
+# a_steel = AlloSteel(1.0, )
+# kal = Mistborn(0.0, 0.0)
+# wax = Twinborn(0.0, 0.0, has_allo_steel=True, has_fero_iron=True)
+# wax_but_pull = Twinborn(0.0, 0.0, has_allo_iron=True, has_fero_iron=True)
+# runner_push = Twinborn(0.0, 0.0, has_fero_steel=True, has_allo_steel=True)
+# runner_pull = Twinborn(0.0, 0.0, has_fero_steel=True, has_allo_iron=True)
 
 # Allo steel set initial conditions, then show graph simulation
 
