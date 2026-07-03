@@ -188,17 +188,18 @@ class Twinborn(Metalborn):
         self.has_allo_iron = has_allo_iron
         self.has_fero_iron = has_fero_iron
         self.body_speed_potential = body_speed_potential
+        self.body_weight_potential = body_weight_potential
 
     def store_weight(self, metal_fero_instance, weight_fraction_to_store=0.1):
         # check if metal_fero_instance is an instance of FeroIron
         if isinstance(metal_fero_instance, FeroIron):
             # store weight in FeroIron instance, then subtract fraction from Twinborn body_weight_potential.
             metal_fero_instance.weight_stored += self.body_weight_potential * weight_fraction_to_store
-            metal_fero_instance.weight_stored = round(metal_fero_instance.weight_stored, 1)
+            metal_fero_instance.weight_stored = round(metal_fero_instance.weight_stored, 3)
             self.body_weight_potential = self.body_weight_potential - (self.body_weight_potential * weight_fraction_to_store)
-            self.body_weight_potential = round(self.body_weight_potential, 1)
+            self.body_weight_potential = round(self.body_weight_potential, 3)
         else:
-            print(f"({metal_fero_instance}), this is not FeroIron!")
+            print(f"The fero metal instance is not FeroIron!")
 
     def use_stored_weight(self, metal_fero_instance):
         # check if metal_fero_instance is an instance of FeroIron
@@ -216,7 +217,7 @@ class Twinborn(Metalborn):
             self.body_speed_potential = self.body_speed_potential - (self.body_speed_potential * speed_fraction_to_store)
             self.body_speed_potential = round(self.body_speed_potential, 1)
         else:
-            print(f"({metal_fero_instance}), this is not FeroSteel!")        
+            print(f"The fero metal instance is not FeroSteel!")        
 
     def use_stored_speed(self, metal_fero_instance):
         # check if metal_fero_instance is an instance of FeroSteel

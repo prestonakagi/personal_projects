@@ -1,5 +1,5 @@
 import pytest
-from mistborn_simulation import Metalborn, Mistborn, Anchor, AlloSteel
+from mistborn_simulation import Metalborn, Mistborn, Twinborn, Anchor, AlloSteel, FeroIron, FeroSteel
 from projectile_motion_simple import simulate_projectile_motion
 
 # Unit tests for Metalborn.burn using pytest
@@ -100,6 +100,28 @@ def test_mistborn_use_duralumin():
     assert pusher4.current_speed == pytest.approx(3.4)
     assert a_steel.remaining_mass == pytest.approx(0.0)
 
-test_mistborn_use_duralumin()
+# test_mistborn_use_duralumin()
+
+# Test Twinborn methods
+# store weight
+def test_twinborn_store_weight():
+    a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
+    f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
+    pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    # TODO: Don't think has_type_of_metal means anything or will be used for Twinborn attributes.
+    # body weight potential is default 10.0
+    pusher_skimmer1.store_weight(f_iron) # test default of fraction of 0.1
+    assert f_iron.weight_stored == pytest.approx(1.000)
+    assert pusher_skimmer1.body_weight_potential == pytest.approx(9.000)
+
+    # wrong fero metal
+    f_steel = FeroSteel(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Steel")
+    pusher_skimmer2 = Twinborn(a_steel, f_steel, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    pusher_skimmer2.store_weight(f_steel)
+    assert f_iron.weight_stored == pytest.approx(1.000) # if hasn't changed
+    assert pusher_skimmer1.body_weight_potential == pytest.approx(9.000) # if hasn't changed
+
+
+test_twinborn_store_weight()
 
 print("\nEnd testing")
