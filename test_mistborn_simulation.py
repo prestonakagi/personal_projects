@@ -81,12 +81,24 @@ def test_mistborn_use_duralumin():
     pusher4 = Mistborn(initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
 
     pusher1.use_duralumin(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
-    expected_speed1 = (10 * a_steel.remaining_mass / a_steel.initial_mass) * anchor.anchor_mass / pusher1.body_mass
+    # expected_speed1 = (10 * a_steel.remaining_mass / a_steel.initial_mass) * anchor.anchor_mass / pusher1.body_mass
     assert pusher1.current_speed == pytest.approx(88.7)
-    # assert pusher1.current_speed == pytest.approx(expected_speed1)
     assert a_steel.remaining_mass == pytest.approx(0.0)
     
     a_steel.remaining_mass = 1.0
+    pusher2.use_duralumin(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
+    assert pusher2.current_speed == pytest.approx(68.2)
+    assert a_steel.remaining_mass == pytest.approx(0.0)
+
+    a_steel.remaining_mass = 0.85
+    pusher3.use_duralumin(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
+    assert pusher3.current_speed == pytest.approx(58.0)
+    assert a_steel.remaining_mass == pytest.approx(0.0)
+
+    a_steel.remaining_mass = 0.05
+    pusher4.use_duralumin(a_steel, anchor, radius_for_drag=0.825) # average adult height divided by 2 in meters.
+    assert pusher4.current_speed == pytest.approx(3.4)
+    assert a_steel.remaining_mass == pytest.approx(0.0)
 
 test_mistborn_use_duralumin()
 
