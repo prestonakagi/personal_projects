@@ -207,7 +207,8 @@ class Twinborn(Metalborn):
             # take stored weight (float) in FeroIron instance and add to self.current_speed.
             self.current_speed += metal_fero_instance.weight_stored * weight_fraction_to_use
             self.current_speed = round(self.current_speed, 3)
-            # subtract 
+            # subtract fraction from metal weight stored
+            metal_fero_instance.weight_stored -= metal_fero_instance.weight_stored * weight_fraction_to_use
         else:
             print(f"The fero metal instance is not FeroIron!")
 
@@ -228,6 +229,8 @@ class Twinborn(Metalborn):
             # take stored speed in FeroSteel instance and add to self.current_speed.
             self.current_speed += metal_fero_instance.speed_stored * speed_fraction_to_use
             self.current_speed = round(self.current_speed, 3)
+            # subtract fraction from metal speed stored
+            metal_fero_instance.speed_stored -= metal_fero_instance.speed_stored * speed_fraction_to_use
         else:
             print(f"The fero metal instance is not FeroSteel!") 
 
