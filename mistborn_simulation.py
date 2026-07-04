@@ -201,12 +201,15 @@ class Twinborn(Metalborn):
         else:
             print(f"The fero metal instance is not FeroIron!")
 
-    def use_stored_weight(self, metal_fero_instance):
+    def use_stored_weight(self, metal_fero_instance, weight_fraction_to_use=0.1):
         # check if metal_fero_instance is an instance of FeroIron
         if isinstance(metal_fero_instance, FeroIron):
             # take stored weight (float) in FeroIron instance and add to self.current_speed.
-            self.current_speed += metal_fero_instance.weight_stored
-            self.current_speed = round(self.current_speed, 1)
+            self.current_speed += metal_fero_instance.weight_stored * weight_fraction_to_use
+            self.current_speed = round(self.current_speed, 3)
+            # subtract 
+        else:
+            print(f"The fero metal instance is not FeroIron!")
 
     def store_speed(self, metal_fero_instance, speed_fraction_to_store=0.1):
         # check if metal_fero_instance is an instance of FeroSteel
@@ -215,16 +218,18 @@ class Twinborn(Metalborn):
             metal_fero_instance.speed_stored += self.body_speed_potential * speed_fraction_to_store
             metal_fero_instance.speed_stored = round(metal_fero_instance.speed_stored, 1)
             self.body_speed_potential = self.body_speed_potential - (self.body_speed_potential * speed_fraction_to_store)
-            self.body_speed_potential = round(self.body_speed_potential, 1)
+            self.body_speed_potential = round(self.body_speed_potential, 3)
         else:
             print(f"The fero metal instance is not FeroSteel!")        
 
-    def use_stored_speed(self, metal_fero_instance):
+    def use_stored_speed(self, metal_fero_instance, speed_fraction_to_use=0.1):
         # check if metal_fero_instance is an instance of FeroSteel
         if isinstance(metal_fero_instance, FeroSteel):
             # take stored speed in FeroSteel instance and add to self.current_speed.
-            self.current_speed += metal_fero_instance.speed_stored
-            self.current_speed = round(self.current_speed, 1)
+            self.current_speed += metal_fero_instance.speed_stored * speed_fraction_to_use
+            self.current_speed = round(self.current_speed, 3)
+        else:
+            print(f"The fero metal instance is not FeroSteel!") 
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
 

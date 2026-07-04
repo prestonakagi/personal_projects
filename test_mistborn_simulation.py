@@ -142,6 +142,19 @@ def test_twinborn_store_speed():
     assert f_steel.speed_stored == pytest.approx(1.000) # if hasn't changed
     assert pusher_runner1.body_speed_potential == pytest.approx(9.000) # if hasn't changed
 
-test_twinborn_store_speed()
+# test_twinborn_store_speed()
+
+def test_use_stored_weight():
+    a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
+    f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron", weight_stored=1.1)
+    pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    
+    pusher_skimmer1.use_stored_weight(f_iron)
+    assert pusher_skimmer1.current_speed == pytest.approx(1.100)
+
+    # wrong fero metal
+    f_steel = FeroSteel(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Steel")
+    
+
 
 print("\nEnd testing")
