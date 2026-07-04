@@ -122,6 +122,26 @@ def test_twinborn_store_weight():
     assert pusher_skimmer1.body_weight_potential == pytest.approx(9.000) # if hasn't changed
 
 
-test_twinborn_store_weight()
+# test_twinborn_store_weight()
+
+# store speed
+def test_twinborn_store_speed():
+    a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
+    f_steel = FeroSteel(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Steel")
+    pusher_runner1 = Twinborn(a_steel, f_steel, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    # TODO: Don't think has_type_of_metal means anything or will be used for Twinborn attributes.
+    # body speed potential is default 10.0
+    pusher_runner1.store_speed(f_steel) # test default of fraction of 0.1
+    assert f_steel.speed_stored == pytest.approx(1.000)
+    assert pusher_runner1.body_speed_potential == pytest.approx(9.000)
+
+    # wrong fero metal
+    f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
+    pusher_runner2 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    pusher_runner2.store_speed(f_iron)
+    assert f_steel.speed_stored == pytest.approx(1.000) # if hasn't changed
+    assert pusher_runner1.body_speed_potential == pytest.approx(9.000) # if hasn't changed
+
+test_twinborn_store_speed()
 
 print("\nEnd testing")
