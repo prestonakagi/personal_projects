@@ -5,8 +5,11 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from math import isclose
 
-def simulate_projectile_motion_with_drag(radius, mass, initial_velocity, angle_degree):
+def simulate_projectile_motion_with_drag(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
+    # Parameter speed_change: when Twinborn's weight increases at time_of_weight_change, a negative float will be added to and redefine (+=) vx[i].
+    #                         When Twinborn's weight decreases at time_of_weight_change, a positive float will be added to and redefine (+=) vx[i].
 
     # 1. Physical Constants & Parameters
     g = 9.81 # acceleration due to gravity (m/s^2)
@@ -32,31 +35,55 @@ def simulate_projectile_motion_with_drag(radius, mass, initial_velocity, angle_d
     t = [0.0] # Time array
     x = [x0] # X-position array
     y = [y0] # Y-position array
-    vx = [vx0] # X-velocity array #NOTE: only Ferro iron will change the vx
+    vx = [vx0] # X-velocity array #NOTE: only Ferro iron will change the vx at certain time
     vy = [vy0] # Y-velocity array
 
     # 4. Numerical Integration Loop (Euler-Cromer Method)
     i = 0
     while y[i] >= 0.0:
-        # Current total velocity magnitude
-        v = np.sqrt(vx[i]**2 + vy[i]**2) #NOTE: only Ferro iron will change the vx
+        if any(isclose(time, time_to_change_weight, abs_tol=1e-3) for time in t):
+            # change only vx[i]
+            vx[i] += speed_change
 
-        # Calculate accelerations (F/m = a)
-        # Drag force opposes the direction of each velocity component
-        ax = - (k / m) * v * vx[i] #NOTE: only Ferro iron will change the vx
-        ay = - g - (k / m) * v * vy[i]
+            # Current total velocity magnitude
+            v = np.sqrt(vx[i]**2 + vy[i]**2) #NOTE: only Ferro iron will change the vx at certain time
+    
+            # Calculate accelerations (F/m = a)
+            # Drag force opposes the direction of each velocity component
+            ax = - (k / m) * v * vx[i] #NOTE: only Ferro iron will change the vx at certain time
+            ay = - g - (k / m) * v * vy[i]
+    
+            # Update velocities for the next step
+            vx.append(vx[i] + ax * dt)
+            vy.append(vy[i] + ay * dt)
+    
+            # Update positions using the newly calculated velocities
+            x.append(x[i] + vx[i+1] * dt)
+            y.append(y[i] + vy[i+1] * dt)
+    
+            # Advance time track
+            t.append(t[i] + dt)
+            i += 1
+        else:
+            # Current total velocity magnitude
+            v = np.sqrt(vx[i]**2 + vy[i]**2)
 
-        # Update velocities for the next step
-        vx.append(vx[i] + ax * dt)
-        vy.append(vy[i] + ay * dt)
+            # Calculate accelerations (F/m = a)
+            # Drag force opposes the direction of each velocity component
+            ax = - (k / m) * v * vx[i]
+            ay = - g - (k / m) * v * vy[i]
 
-        # Update positions using the newly calculated velocities
-        x.append(x[i] + vx[i+1] * dt)
-        y.append(y[i] + vy[i+1] * dt)
+            # Update velocities for the next step
+            vx.append(vx[i] + ax * dt)
+            vy.append(vy[i] + ay * dt)
 
-        # Advance time track
-        t.append(t[i] + dt)
-        i += 1
+            # Update positions using the newly calculated velocities
+            x.append(x[i] + vx[i+1] * dt)
+            y.append(y[i] + vy[i+1] * dt)
+
+            # Advance time track
+            t.append(t[i] + dt)
+            i += 1
 
     # 5. Plotting the Trajectory
     plt.figure(figsize=(10, 5))

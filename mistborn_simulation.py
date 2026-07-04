@@ -238,6 +238,9 @@ class Twinborn(Metalborn):
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
     def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag):
         if self.want_drag_projectile == True and self.want_simple_projectile == False:
+            # make a variable to store speed change to use as arguement in the projectile drag weight function
+
+            
             pass
         elif self.want_drag_projectile == False and self.want_simple_projectile == True:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
