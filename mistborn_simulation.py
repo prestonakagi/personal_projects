@@ -201,17 +201,22 @@ class Twinborn(Metalborn):
             print(f"The fero metal instance is not FeroIron!")
 
     def use_stored_weight(self, metal_fero_instance, weight_fraction_to_use=0.1):
+        """
+        Updates metal instance's weight stored attribute.
+        Returns fraction of weight stored (to be used to add to Twinborn's current speed).
+        """
         # check if metal_fero_instance is an instance of FeroIron
         if isinstance(metal_fero_instance, FeroIron):
             # take stored weight (float) in FeroIron instance and add to self.current_speed.
-            self.current_speed += metal_fero_instance.weight_stored * weight_fraction_to_use
-            self.current_speed = round(self.current_speed, 3)
+            stored_weight_to_use = metal_fero_instance.weight_stored * weight_fraction_to_use
+            stored_weight_to_use = round(self.current_speed, 3)
             # subtract fraction from metal weight stored
             metal_fero_instance.weight_stored -= metal_fero_instance.weight_stored * weight_fraction_to_use
             if metal_fero_instance.weight_stored <= 0.0:
                 self.has_stored_weight = False
                 metal_fero_instance.weight_stored = 0.0 # make sure any negative value reset to zero.
             else: pass
+            return stored_weight_to_use
         else:
             print(f"The fero metal instance is not FeroIron!")
 
@@ -306,8 +311,7 @@ class Twinborn(Metalborn):
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
-    def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag):
-        # make a variable to store speed change to use as arguement in the projectile drag weight function
+    def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag, fraction_stored_weight_to_use):
         ways_to_jump = ['burn', 'flare']
         if self.has_stored_weight:
             jump_type = ""
@@ -321,6 +325,9 @@ class Twinborn(Metalborn):
                     print(f"Need to enter the word burn or the word flare!")
                     jump_type = input(f"Do you want to burn or flare to jump? ")
 
+            # make a variable to store speed change to use as arguement in the projectile drag weight function
+            stored_weight_to_speed = self.use_stored_weight(type_of_metal_instance, fraction_stored_weight_to_use)
+            #weight_being_stored_to_speed = self.  TODO: make a store weight while jumping method.
             if self.want_drag_projectile == True and self.want_simple_projectile == False:
 
 
