@@ -180,13 +180,11 @@ class Mistborn(Metalborn):
             print(f"Can't do neither simple and drag projectile!")
 
 class Twinborn(Metalborn):
-    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False, has_allo_steel=False, has_fero_steel=False, has_allo_iron=False, has_fero_iron=False, body_speed_potential=10.0, body_weight_potential=10.0):
+    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False, has_stored_weight=False, has_stored_speed=False, body_speed_potential=10.0, body_weight_potential=10.0):
         # super() calls the Parent's __init__ to inherit Parent's specified attributes
         super().__init__(initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False)
-        self.has_allo_steel = has_allo_steel
-        self.has_fero_steel = has_fero_steel
-        self.has_allo_iron = has_allo_iron
-        self.has_fero_iron = has_fero_iron
+        self.has_stored_weight = has_stored_weight
+        self.has_stored_speed = has_stored_speed
         self.body_speed_potential = body_speed_potential
         self.body_weight_potential = body_weight_potential
 
@@ -209,6 +207,10 @@ class Twinborn(Metalborn):
             self.current_speed = round(self.current_speed, 3)
             # subtract fraction from metal weight stored
             metal_fero_instance.weight_stored -= metal_fero_instance.weight_stored * weight_fraction_to_use
+            if metal_fero_instance.weight_stored <= 0.0:
+                self.has_stored_weight = False
+                metal_fero_instance.weight_stored = 0.0 # make sure any negative value reset to zero.
+            else: pass
         else:
             print(f"The fero metal instance is not FeroIron!")
 
@@ -231,16 +233,23 @@ class Twinborn(Metalborn):
             self.current_speed = round(self.current_speed, 3)
             # subtract fraction from metal speed stored
             metal_fero_instance.speed_stored -= metal_fero_instance.speed_stored * speed_fraction_to_use
+            if metal_fero_instance.speed_stored <= 0.0:
+                self.has_stored_speed = False
+                metal_fero_instance.speed_stored = 0.0 # make sure any negative value reset to zero.
+            else: pass
         else:
             print(f"The fero metal instance is not FeroSteel!") 
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
     def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag):
-        if self.want_drag_projectile == True and self.want_simple_projectile == False:
-            # make a variable to store speed change to use as arguement in the projectile drag weight function
+        # make a variable to store speed change to use as arguement in the projectile drag weight function
 
+
+        if self.want_drag_projectile == True and self.want_simple_projectile == False:
             
+
+
             pass
         elif self.want_drag_projectile == False and self.want_simple_projectile == True:
             simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
