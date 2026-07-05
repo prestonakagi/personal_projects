@@ -242,7 +242,7 @@ class Twinborn(Metalborn):
         else:
             print(f"The fero metal instance is not FeroSteel!") 
 
-    def burn_for_Twinborn(self, type_of_metal_instance, anchor_instance, radius_for_drag):
+    def burn_for_Twinborn(self, type_of_metal_instance, anchor_instance):
         """
         Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
         Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
@@ -273,7 +273,7 @@ class Twinborn(Metalborn):
             type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
             type_of_metal_instance.remaining_mass = round(type_of_metal_instance.remaining_mass, 1)
 
-    def flare_for_Twinborn(self, type_of_metal_instance, anchor_instance, radius_for_drag):
+    def flare_for_Twinborn(self, type_of_metal_instance, anchor_instance):
         """
         Almost the same as burn(), but flare() multiplies metal usage and speed increase by 3 and 5, respectively.
         Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
@@ -310,9 +310,16 @@ class Twinborn(Metalborn):
         # make a variable to store speed change to use as arguement in the projectile drag weight function
         ways_to_jump = ['burn', 'flare']
         if self.has_stored_weight:
-            jump_type = input(f"Do you want to burn or flare to jump? ")
-            if jump_type.lower() in ways_to_jump:
-                self.burn(type_of_metal_instance, anchor_instance, radius_for_drag)
+            jump_type = ""
+            while jump_type.lower() not in ways_to_jump:
+                jump_type = input(f"Do you want to burn or flare to jump? ")
+                if jump_type.lower() == "burn":
+                    self.burn_for_Twinborn(type_of_metal_instance, anchor_instance)
+                elif jump_type.lower() == "flare":
+                    self.flare_for_Twinborn(type_of_metal_instance, anchor_instance)
+                else: 
+                    print(f"Need to enter the word burn or the word flare!")
+                    jump_type = input(f"Do you want to burn or flare to jump? ")
 
             if self.want_drag_projectile == True and self.want_simple_projectile == False:
 
