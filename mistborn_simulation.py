@@ -209,9 +209,9 @@ class Twinborn(Metalborn):
         if isinstance(metal_fero_instance, FeroIron):
             # take stored weight (float) in FeroIron instance and add to self.current_speed.
             stored_weight_to_use = metal_fero_instance.weight_stored * weight_fraction_to_use
-            stored_weight_to_use = round(self.current_speed, 3)
+            stored_weight_to_use = round(stored_weight_to_use, 3)
             # subtract fraction from metal weight stored
-            metal_fero_instance.weight_stored -= metal_fero_instance.weight_stored * weight_fraction_to_use
+            metal_fero_instance.weight_stored -= stored_weight_to_use
             if metal_fero_instance.weight_stored <= 0.0:
                 self.has_stored_weight = False
                 metal_fero_instance.weight_stored = 0.0 # make sure any negative value reset to zero.

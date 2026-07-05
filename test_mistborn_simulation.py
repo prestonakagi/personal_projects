@@ -149,18 +149,19 @@ def test_use_stored_weight():
     f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron", weight_stored=1.1)
     pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
     
-    pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_use=0.2)
-    assert pusher_skimmer1.current_speed == pytest.approx(0.220)
+    weight_to_use = pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_use=0.2)
     assert f_iron.weight_stored == pytest.approx(0.880)
+    assert weight_to_use == pytest.approx(0.220)
 
     # wrong fero metal
     f_steel = FeroSteel(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Steel")
     pusher_skimmer2 = Twinborn(a_steel, f_steel, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
     pusher_skimmer2.use_stored_weight(f_steel, weight_fraction_to_use=0.2)
-    assert pusher_skimmer1.current_speed == pytest.approx(0.220) # if hasn't changed
     assert f_iron.weight_stored == pytest.approx(0.880) # if hasn't changed
 
-# test_use_stored_weight()
+test_use_stored_weight()
+
+#TODO: test store weight while jumping method.
 
 def test_use_stored_speed():
     a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
@@ -178,6 +179,6 @@ def test_use_stored_speed():
     assert pusher_runner1.current_speed == pytest.approx(0.330) # if hasn't changed
     assert f_steel.speed_stored == pytest.approx(0.770) # if hasn't changed
 
-test_use_stored_speed()
+# test_use_stored_speed()
 
 print("\nEnd testing")
