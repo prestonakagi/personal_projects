@@ -220,6 +220,25 @@ class Twinborn(Metalborn):
         else:
             print(f"The fero metal instance is not FeroIron!")
 
+    def store_weight_while_jumping(self, metal_fero_instance, weight_fraction_to_store=0.1):
+        """
+        Updates metal instance's weight stored attribute and subtracts from self body weight potential.
+        Returns fraction of weight stored (to be used to add to Twinborn's current speed) as a negative float.
+        """
+        # check if metal_fero_instance is an instance of FeroIron
+        if isinstance(metal_fero_instance, FeroIron):
+            storing_weight_fraction = self.body_weight_potential * weight_fraction_to_store
+            storing_weight_fraction = round(metal_fero_instance.weight_stored, 3)
+            # store weight in FeroIron instance, then subtract fraction from Twinborn body_weight_potential.
+            metal_fero_instance.weight_stored += storing_weight_fraction
+            metal_fero_instance.weight_stored = round(metal_fero_instance.weight_stored, 3)
+            self.body_weight_potential = self.body_weight_potential - storing_weight_fraction
+            self.body_weight_potential = round(self.body_weight_potential, 3)
+            self.has_stored_weight = True
+            return (-1 * storing_weight_fraction)
+        else:
+            print(f"The fero metal instance is not FeroIron!")\
+
     def store_speed(self, metal_fero_instance, speed_fraction_to_store=0.1):
         # check if metal_fero_instance is an instance of FeroSteel
         if isinstance(metal_fero_instance, FeroSteel):
