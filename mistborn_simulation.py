@@ -196,6 +196,7 @@ class Twinborn(Metalborn):
             metal_fero_instance.weight_stored = round(metal_fero_instance.weight_stored, 3)
             self.body_weight_potential = self.body_weight_potential - (self.body_weight_potential * weight_fraction_to_store)
             self.body_weight_potential = round(self.body_weight_potential, 3)
+            self.has_stored_weight = True
         else:
             print(f"The fero metal instance is not FeroIron!")
 
@@ -222,6 +223,7 @@ class Twinborn(Metalborn):
             metal_fero_instance.speed_stored = round(metal_fero_instance.speed_stored, 1)
             self.body_speed_potential = self.body_speed_potential - (self.body_speed_potential * speed_fraction_to_store)
             self.body_speed_potential = round(self.body_speed_potential, 3)
+            self.has_stored_speed = True
         else:
             print(f"The fero metal instance is not FeroSteel!")        
 
@@ -240,24 +242,92 @@ class Twinborn(Metalborn):
         else:
             print(f"The fero metal instance is not FeroSteel!") 
 
+    def burn_for_Twinborn(self, type_of_metal_instance, anchor_instance, radius_for_drag):
+        """
+        Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
+        Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
+        """
+        # use a fraction of metal's remaining mass. Subtract by one tenth of initial mass.
+        # burn multiplier is 1
+        # Then multiply burn multiplier to anchor mass to Metalborn body mass ratio and add to current speed.
+        if type_of_metal_instance.remaining_mass < 0.1 * type_of_metal_instance.initial_mass:
+            print(f"You are out of {type_of_metal_instance.name_of_metal}!")
+        elif type_of_metal_instance.remaining_mass == 0.1 * type_of_metal_instance.initial_mass:
+            print(f"Last jump!")
+            if self.current_speed == self.initial_speed:
+                self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            else: # for after first jump or already increased speed
+                self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
+            type_of_metal_instance.remaining_mass = round(type_of_metal_instance.remaining_mass, 1)
+        elif type_of_metal_instance.remaining_mass > 0.1 * type_of_metal_instance.initial_mass:
+            if self.current_speed == self.initial_speed:
+                self.current_speed = self.initial_speed + (1 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            else: # for after already increased speed
+                self.current_speed += (1 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            # update remaining mass of metal instance
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.1 * type_of_metal_instance.initial_mass)
+            type_of_metal_instance.remaining_mass = round(type_of_metal_instance.remaining_mass, 1)
+
+    def flare_for_Twinborn(self, type_of_metal_instance, anchor_instance, radius_for_drag):
+        """
+        Almost the same as burn(), but flare() multiplies metal usage and speed increase by 3 and 5, respectively.
+        Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
+        Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
+        """
+        # use a fraction of metal's remaining mass. Subtract by three tenths of initial mass.
+        # flare multiplier is 5
+        # Then multiply burn multiplier to anchor mass to Metalborn body mass ratio and add to current speed.
+        if type_of_metal_instance.remaining_mass < 0.3 * type_of_metal_instance.initial_mass:
+            print(f"You are out of {type_of_metal_instance.name_of_metal}!")
+        elif type_of_metal_instance.remaining_mass == 0.3 * type_of_metal_instance.initial_mass:
+            print(f"Last jump!")
+            if self.current_speed == self.initial_speed:
+                self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            else: # for after first jump or already increased speed
+                self.current_speed += (5 / 1 *(0.3 * type_of_metal_instance.remaining_mass))
+                self.current_speed = round(self.current_speed, 1)
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.3 * type_of_metal_instance.initial_mass)
+            type_of_metal_instance.remaining_mass = round(type_of_metal_instance.remaining_mass, 1)
+        elif type_of_metal_instance.remaining_mass > 0.3 * type_of_metal_instance.initial_mass:
+            if self.current_speed == self.initial_speed:
+                self.current_speed = self.initial_speed + (5 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            else: # for after already increased speed
+                self.current_speed += (5 * anchor_instance.anchor_mass / self.body_mass)
+                self.current_speed = round(self.current_speed, 1)
+            type_of_metal_instance.remaining_mass = type_of_metal_instance.remaining_mass - (0.3 * type_of_metal_instance.initial_mass)
+            type_of_metal_instance.remaining_mass = round(type_of_metal_instance.remaining_mass, 1)
+
     # use burn and/or flare method(s) after use store method then use_stored___ method.
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
     def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag):
         # make a variable to store speed change to use as arguement in the projectile drag weight function
+        ways_to_jump = ['burn', 'flare']
+        if self.has_stored_weight:
+            jump_type = input(f"Do you want to burn or flare to jump? ")
+            if jump_type.lower() in ways_to_jump:
+                self.burn(type_of_metal_instance, anchor_instance, radius_for_drag)
+
+            if self.want_drag_projectile == True and self.want_simple_projectile == False:
 
 
-        if self.want_drag_projectile == True and self.want_simple_projectile == False:
-            
 
-
-            pass
-        elif self.want_drag_projectile == False and self.want_simple_projectile == True:
-            simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
-        elif self.want_drag_projectile == True and self.want_simple_projectile == True:
-            simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
-            #TODO: the complicated jump here
+                pass
+            elif self.want_drag_projectile == False and self.want_simple_projectile == True:
+                simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
+            elif self.want_drag_projectile == True and self.want_simple_projectile == True:
+                simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
+                #TODO: the complicated jump here
+            else:
+                print(f"Can't do neither simple and drag projectile!")
         else:
-            print(f"Can't do neither simple and drag projectile!")
+            print(f"\nYou have not stored any weight yet. First store some weight and then jump again.")
 
 # Make Parent Class of Metal and Child Classes of each type_and_metal.
 class Metal:
