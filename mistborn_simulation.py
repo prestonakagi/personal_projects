@@ -228,7 +228,7 @@ class Twinborn(Metalborn):
         # check if metal_fero_instance is an instance of FeroIron
         if isinstance(metal_fero_instance, FeroIron):
             storing_weight_fraction = self.body_weight_potential * weight_fraction_to_store
-            storing_weight_fraction = round(metal_fero_instance.weight_stored, 3)
+            storing_weight_fraction = round(storing_weight_fraction, 3)
             # store weight in FeroIron instance, then subtract fraction from Twinborn body_weight_potential.
             metal_fero_instance.weight_stored += storing_weight_fraction
             metal_fero_instance.weight_stored = round(metal_fero_instance.weight_stored, 3)
