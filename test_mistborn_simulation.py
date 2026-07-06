@@ -199,16 +199,22 @@ def test_use_stored_speed():
 # test_use_stored_speed()
 
 def test_jump_and_change_weight_already_stored_weight():
-    a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
+    anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
+    a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")    
+    a_steel2 = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
     f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
+    f_iron2 = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
     # pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
     pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=False, want_drag_projectile=True)
+    pusher_skimmer2 = Twinborn(a_steel2, f_iron2, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=False)
     # body weight potential is default 10.0
-    anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
 
     pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store=0.2)
-    pusher_skimmer1.jump_and_change_weight(f_iron, anchor,(1.65/2), 0.8, 2.000)
+    pusher_skimmer1.jump_and_change_weight(f_iron, anchor, (1.65/2), 0.8, 0.05)
+    pusher_skimmer2.store_weight(f_iron2, weight_fraction_to_store=0.2)
+    pusher_skimmer2.jump_and_change_weight(f_iron2, anchor, (1.65/2), 0.8, 0.05)
 
+# TODO: 05JUL26, jump_and_change_weight NOT showing a plot (like a with drag).
 test_jump_and_change_weight_already_stored_weight()
 
 print("\nEnd testing")
