@@ -4,6 +4,7 @@ from projectile_motion_simple import simulate_projectile_motion
 # Module for projectile motion with (large) quadratic drag. Euler-Cromer numerical method 
 # from personal_projects.projectile_motion_with_drag import simulate_projectile_motion_with_drag
 from projectile_motion_with_drag import simulate_projectile_motion_with_drag
+from projectile_motion_with_drag_and_changing_weight import simulate_projectile_motion_with_drag_and_changing_weight
 
 # For each module, code as function, and comments on each equation and what each parameter means (with units!). Also a variable for each equation parameter. 
 # Maybe make Classes for metallic object, Mistborn, Feruchemist, Twinborn.
@@ -330,7 +331,7 @@ class Twinborn(Metalborn):
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
-    def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag, fraction_stored_weight_to_use):
+    def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag, fraction_stored_weight_to_use, time_to_change_weight):
         ways_to_jump = ['burn', 'flare']
         if self.has_stored_weight:
             jump_type = ""
@@ -345,18 +346,28 @@ class Twinborn(Metalborn):
                     jump_type = input(f"Do you want to burn or flare to jump? ")
 
             # make a variable to store speed change to use as arguement in the projectile drag weight function
-            stored_weight_to_speed = self.use_stored_weight(type_of_metal_instance, fraction_stored_weight_to_use)
-            #weight_being_stored_to_speed = self.  TODO: make a store weight while jumping method.
+            # user input to choose how use weight, one time, during one jump.
+            weight_usages = ['stored', 'storing']
+            weight_usage = ""
+            speed_change = 0.0
+            while weight_usage.lower() not in weight_usages:
+                weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
+                if weight_usage.lower() == 'stored':
+                    speed_change = self.use_stored_weight(type_of_metal_instance, weight_fraction_to_use=fraction_stored_weight_to_use)
+                elif weight_usage.lower() == 'storing':
+                    speed_change = self.store_weight_while_jumping(type_of_metal_instance, weight_fraction_to_store=fraction_stored_weight_to_use)
+                else:
+                    print(f"Need to enter the word stored or the word storing!")
+                    weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
+
+            # TODO: might have to guess on a time for projectile with changing weight 05JUL26.
             if self.want_drag_projectile == True and self.want_simple_projectile == False:
-
-
-
-                pass
+                simulate_projectile_motion_with_drag_and_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, time_to_change_weight=time_to_change_weight, speed_change=speed_change)
             elif self.want_drag_projectile == False and self.want_simple_projectile == True:
                 simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
             elif self.want_drag_projectile == True and self.want_simple_projectile == True:
                 simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
-                #TODO: the complicated jump here
+                simulate_projectile_motion_with_drag_and_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, time_to_change_weight=time_to_change_weight, speed_change=speed_change)
             else:
                 print(f"Can't do neither simple and drag projectile!")
         else:

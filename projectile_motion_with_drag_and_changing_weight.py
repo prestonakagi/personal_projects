@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import isclose
 
-def simulate_projectile_motion_with_drag(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
+def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
     # Parameter speed_change: when Twinborn's weight increases at time_of_weight_change, a negative float will be added to and redefine (+=) vx[i].
     #                         When Twinborn's weight decreases at time_of_weight_change, a positive float will be added to and redefine (+=) vx[i].
 
@@ -103,4 +103,4 @@ def simulate_projectile_motion_with_drag(radius, mass, initial_velocity, angle_d
 
 
 if __name__ == "__main__": # use for module
-    simulate_projectile_motion_with_drag((1.65/2), 62, 50, 45)
+    simulate_projectile_motion_with_drag_and_changing_weight((1.65/2), 62, 50, 45, 0.050, 1)
