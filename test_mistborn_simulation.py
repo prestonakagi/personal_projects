@@ -178,7 +178,7 @@ def test_store_weight_while_jumping():
     assert f_iron.weight_stored == pytest.approx(1.000) # if hasn't changed
     assert pusher_skimmer1.body_weight_potential == pytest.approx(9.000) # if hasn't changed
 
-test_store_weight_while_jumping()
+# test_store_weight_while_jumping()
 
 def test_use_stored_speed():
     a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
@@ -197,5 +197,18 @@ def test_use_stored_speed():
     assert f_steel.speed_stored == pytest.approx(0.770) # if hasn't changed
 
 # test_use_stored_speed()
+
+def test_jump_and_change_weight_already_stored_weight():
+    a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
+    f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
+    # pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=False, want_drag_projectile=True)
+    # body weight potential is default 10.0
+    anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
+
+    pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store=0.2)
+    pusher_skimmer1.jump_and_change_weight(f_iron, anchor,(1.65/2), 0.8, 2.000)
+
+test_jump_and_change_weight_already_stored_weight()
 
 print("\nEnd testing")
