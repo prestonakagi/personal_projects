@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import isclose
 
+"""
 def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
     # Parameter speed_change: when Twinborn's weight increases at time_of_weight_change, a negative float will be added to and redefine (+=) vx[i].
     #                         When Twinborn's weight decreases at time_of_weight_change, a positive float will be added to and redefine (+=) vx[i].
@@ -94,6 +95,89 @@ def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initi
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.axhline(0, color='black', lw=1)
     plt.legend()
+    plt.show()
+
+    # Print critical metrics
+    print(f"Max Height: {max(y):.2f} meters")
+    print(f"Total Distance (Range): {x[-1]:.2f} meters")
+    print(f"Total Flight Time: {t[-1]:.2f} seconds")
+"""
+
+def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
+    # Parameter speed_change: when Twinborn's weight increases at time_of_weight_change, a negative float will be added to and redefine (+=) vx[i].
+    #                         When Twinborn's weight decreases at time_of_weight_change, a positive float will be added to and redefine (+=) vx[i].
+    # This is only for one time changing weight.
+
+    # 1. Physics Parameters
+    g = 9.81              # Gravity (m/s^2)
+    m = mass # m = 0.145 # Mass of the object (kg, e.g., baseball)
+    rho = 1.225           # Air density (kg/m^3)
+    Cd = 0.47             # Drag coefficient (sphere)
+    r = radius # r = 0.037 # Radius of the object (meters)
+    A = np.pi * r**2      # Cross-sectional area
+
+    # 2. Initial Conditions
+    x, y = 0.0, 0.0       # Starting position
+    v0 = 50.0             # Initial velocity (m/s)
+    angle = 45.0          # Launch angle (degrees)
+    rad_angle = np.radians(angle)
+
+    vx = v0 * np.cos(rad_angle)
+    vy = v0 * np.sin(rad_angle)
+
+    # 3. Simulation Parameters
+    dt = 0.001            # Time step (s)
+    t = 0.0               # Initial time
+    change_time = time_to_change_weight     # Time at which Vx changes (s)
+    new_vx_to_add = speed_change         # The new Vx value after change_time (m/s)
+    has_changed = False   # Flag to ensure it only fires once
+
+    # Lists for plotting
+    t_list, x_list, y_list = [], [], []
+
+    # 4. Simulation Loop (Stops when it hits the ground)
+    while y >= 0:
+        # Record current state
+        t_list.append(t)
+        x_list.append(x)
+        y_list.append(y)
+
+        # Calculate speed and drag force magnitude
+        v = np.sqrt(vx**2 + vy**2)
+        f_drag = 0.5 * rho * Cd * A * v**2
+
+        # Decompose forces into components
+        # Drag direction is always opposite to the current velocity direction
+        f_drag_x = -f_drag * (vx / v)
+        f_drag_y = -f_drag * (vy / v)
+
+        # Accelerations (F = ma -> a = F/m)
+        ax = f_drag_x / m
+        ay = -g + (f_drag_y / m)
+
+        # Update velocities and positions using Euler method
+        x += vx * dt
+        y += vy * dt
+        vx += ax * dt
+        vy += ay * dt
+
+        # Check if we should alter Vx
+        if t >= change_time and not has_changed:
+            vx += new_vx_to_add         # Manually force the velocity change
+            has_changed = True  # Mark as done
+
+        t += dt
+
+    # 5. Plotting the Trajectory
+    plt.figure(figsize=(8, 5))
+    plt.plot(x_list, y_list, label="Projectile Trajectory", color="blue")
+    plt.axvline(x=x_list[t_list.index(next(filter(lambda x: x >= change_time, t_list)))], 
+                color="red", linestyle="--", label="Vx Change Point")
+    plt.title("Projectile Motion with Drag and Variable Vx")
+    plt.xlabel("Horizontal Distance (m)")
+    plt.ylabel("Vertical Distance (m)")
+    plt.legend()
+    plt.grid(True)
     plt.show()
 
     # Print critical metrics
