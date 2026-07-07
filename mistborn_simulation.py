@@ -50,6 +50,8 @@ class Metalborn:
         """
         Uses set amount of remaining_mass of specific metal to set initial condition for one flight ("bounce") and updates instance's metal' remaining_mass.
         Then simulates a graph of trajectory of either a simple projectile or projectile with drag or both.
+
+        Type of metal should be AlloSteel or AlloIron.
         """
         # use a fraction of metal's remaining mass. Subtract by one tenth of initial mass.
         # burn multiplier is 1
@@ -331,7 +333,7 @@ class Twinborn(Metalborn):
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
-    def jump_and_change_weight(self, type_of_metal_instance, anchor_instance, radius_for_drag, fraction_stored_weight_to_use, time_to_change_weight):
+    def jump_and_change_weight(self, allo_type_of_metal_instance, fero_type_of_metal_instance, anchor_instance, radius_for_drag, fraction_stored_weight_to_use, time_to_change_weight):
         """
         Need to have stored weight first to use this method, even if will store more weight.
         """
@@ -341,9 +343,9 @@ class Twinborn(Metalborn):
             while jump_type.lower() not in ways_to_jump:
                 jump_type = input(f"Do you want to burn or flare to jump? ")
                 if jump_type.lower() == "burn":
-                    self.burn_for_Twinborn(type_of_metal_instance, anchor_instance)
+                    self.burn_for_Twinborn(allo_type_of_metal_instance, anchor_instance)
                 elif jump_type.lower() == "flare":
-                    self.flare_for_Twinborn(type_of_metal_instance, anchor_instance)
+                    self.flare_for_Twinborn(allo_type_of_metal_instance, anchor_instance)
                 else: 
                     print(f"Need to enter the word burn or the word flare!")
                     jump_type = input(f"Do you want to burn or flare to jump? ")
@@ -356,9 +358,9 @@ class Twinborn(Metalborn):
             while weight_usage.lower() not in weight_usages:
                 weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
                 if weight_usage.lower() == 'stored':
-                    speed_change = self.use_stored_weight(type_of_metal_instance, weight_fraction_to_use=fraction_stored_weight_to_use)
+                    speed_change = self.use_stored_weight(fero_type_of_metal_instance, weight_fraction_to_use=fraction_stored_weight_to_use)
                 elif weight_usage.lower() == 'storing':
-                    speed_change = self.store_weight_while_jumping(type_of_metal_instance, weight_fraction_to_store=fraction_stored_weight_to_use)
+                    speed_change = self.store_weight_while_jumping(fero_type_of_metal_instance, weight_fraction_to_store=fraction_stored_weight_to_use)
                 else:
                     print(f"Need to enter the word stored or the word storing!")
                     weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
