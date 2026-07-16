@@ -1,6 +1,8 @@
 import pytest
 from mistborn_simulation import Metalborn, Mistborn, Twinborn, Anchor, AlloSteel, FeroIron, FeroSteel
 from projectile_motion_simple import simulate_projectile_motion
+from projectile_motion_with_drag import simulate_projectile_motion_with_drag
+from projectile_motion_with_drag_and_changing_weight import simulate_projectile_motion_with_drag_and_changing_weight
 
 # Unit tests for Metalborn.burn using pytest
 # These tests create an Anchor instance before constructing Metalborn instances.
@@ -197,6 +199,9 @@ def test_use_stored_speed():
     assert f_steel.speed_stored == pytest.approx(0.770) # if hasn't changed
 
 # test_use_stored_speed()
+
+# def test_simulate_projectile_motion_with_drag_and_changing_weight():
+
 
 def test_jump_and_change_weight_already_stored_weight():
     anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
