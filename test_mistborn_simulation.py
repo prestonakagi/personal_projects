@@ -201,17 +201,31 @@ def test_use_stored_speed():
 # test_use_stored_speed()
 
 def test_simulate_projectile_motion_with_drag():
+    """
+    As radius increases, drag force increases. If drag too high, object will drop vertically.
+    As object's mass increases, drag force does less, so more like simple projectile (with no drag).
+    """
     # simulate_projectile_motion_with_drag((165/2), 62.0, 0.0, 45.0)
     # simulate_projectile_motion_with_drag(82.5, 62.0, 0.0, 45.0) # output vertical line going down at x = 0.
     # simulate_projectile_motion_with_drag(82.5, 62.0, 10.0, 45.0) # output is a curve, but max height and distance both 0.00 m and flight time 0.01 seconds.
-    simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 45.0) # Max Height: 2.44 meters, Total Distance (Range): 9.45 meters, Total Flight Time: 1.41 seconds
-    simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 45.0) # vertical line going down at x = 0.
+    # simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 45.0) # Max Height: 2.44 meters, Total Distance (Range): 9.45 meters, Total Flight Time: 1.41 seconds
+    # simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 45.0) # vertical line going down at x = 0.
     # NOTE: for motion with drag, initial velocity cannot be 0!
-
+    # simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 90.0) # vertical line going down at x = 0.
+    simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 90.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
+        # initial_velocity is technically vector in x and y directions. 90 degrees is about 1.571 radians, cosine of that is zero, so no horizontal movement!
 
 test_simulate_projectile_motion_with_drag()
 
-# def test_simulate_projectile_motion_with_drag_and_changing_weight():
+def test_simulate_projectile_motion_with_drag_and_changing_weight():
+    # simulate_projectile_motion_with_drag_and_changing_weight((165/2), 62.0, 0.0, 45.0, 0.05, 1.0) # Error of StopIteration, I think concerning change_time and t_list.
+    # simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 0.0, 45.0, 0.05, 1.0) # Same as line above.
+    simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 10.0, 45.0, 0.05, 1.0) # Error of StopIteration.
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 0.05, 1.0) # Max Height: 34.62 meters, Total Distance (Range): 99.54 meters, Total Flight Time: 5.26 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 0.0, 45.0, 0.05, 1.0) # With speed_change, the initial velocity of zero does not stay zero, so no vertical line going down at x = 0. Output same as line above.
+    # NOTE: for motion with drag, initial velocity cannot be 0!
+
+# test_simulate_projectile_motion_with_drag_and_changing_weight()
 
 
 def test_jump_and_change_weight_already_stored_weight():
