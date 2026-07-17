@@ -200,6 +200,17 @@ def test_use_stored_speed():
 
 # test_use_stored_speed()
 
+def test_simulate_projectile_motion_with_drag():
+    # simulate_projectile_motion_with_drag((165/2), 62.0, 0.0, 45.0)
+    # simulate_projectile_motion_with_drag(82.5, 62.0, 0.0, 45.0) # output vertical line going down at x = 0.
+    # simulate_projectile_motion_with_drag(82.5, 62.0, 10.0, 45.0) # output is a curve, but max height and distance both 0.00 m and flight time 0.01 seconds.
+    simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 45.0) # Max Height: 2.44 meters, Total Distance (Range): 9.45 meters, Total Flight Time: 1.41 seconds
+    simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 45.0) # vertical line going down at x = 0.
+    # NOTE: for motion with drag, initial velocity cannot be 0!
+
+
+test_simulate_projectile_motion_with_drag()
+
 # def test_simulate_projectile_motion_with_drag_and_changing_weight():
 
 
@@ -221,6 +232,6 @@ def test_jump_and_change_weight_already_stored_weight():
     pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, (1.65/2), 0.8, 0.05)
 
 # TODO: 05JUL26, jump_and_change_weight NOT showing a plot (like a with drag).
-test_jump_and_change_weight_already_stored_weight()
+# test_jump_and_change_weight_already_stored_weight()
 
 print("\nEnd testing")
