@@ -167,7 +167,7 @@ def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initi
             has_changed = True  # Mark as done
 
         t += dt
-
+    '''
     # 5. Plotting the Trajectory
     plt.figure(figsize=(8, 5))
     plt.plot(x_list, y_list, label="Projectile Trajectory", color="blue")
@@ -179,7 +179,7 @@ def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initi
     plt.legend()
     plt.grid(True)
     plt.show()
-
+    '''
     # Print critical metrics
     print(f"Max Height: {max(y_list):.2f} meters")
     print(f"Total Distance (Range): {x_list[-1]:.2f} meters")

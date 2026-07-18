@@ -215,17 +215,22 @@ def test_simulate_projectile_motion_with_drag():
     simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 90.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
         # initial_velocity is technically vector in x and y directions. 90 degrees is about 1.571 radians, cosine of that is zero, so no horizontal movement!
 
-test_simulate_projectile_motion_with_drag()
+# test_simulate_projectile_motion_with_drag()
 
 def test_simulate_projectile_motion_with_drag_and_changing_weight():
     # simulate_projectile_motion_with_drag_and_changing_weight((165/2), 62.0, 0.0, 45.0, 0.05, 1.0) # Error of StopIteration, I think concerning change_time and t_list.
     # simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 0.0, 45.0, 0.05, 1.0) # Same as line above.
-    simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 10.0, 45.0, 0.05, 1.0) # Error of StopIteration.
-    # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 0.05, 1.0) # Max Height: 34.62 meters, Total Distance (Range): 99.54 meters, Total Flight Time: 5.26 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 10.0, 45.0, 0.05, 1.0) # Error of StopIteration.
+    simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 0.05, 1.0) # Max Height: 34.62 meters, Total Distance (Range): 99.54 meters, Total Flight Time: 5.26 seconds
     # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 0.0, 45.0, 0.05, 1.0) # With speed_change, the initial velocity of zero does not stay zero, so no vertical line going down at x = 0. Output same as line above.
     # NOTE: for motion with drag, initial velocity cannot be 0!
+    simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 3.50, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.24 meters, Total Flight Time: 5.29 seconds
+    simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 2.30, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.78 meters, Total Flight Time: 5.29 seconds
+    # TODO: can test lists of each arguement and in module comment out plotting and just print out metrics.
+            # Then try to graph results for many variables at same time?
 
-# test_simulate_projectile_motion_with_drag_and_changing_weight()
+
+test_simulate_projectile_motion_with_drag_and_changing_weight()
 
 
 def test_jump_and_change_weight_already_stored_weight():
