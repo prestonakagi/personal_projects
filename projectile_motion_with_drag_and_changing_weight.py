@@ -181,9 +181,10 @@ def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initi
     plt.show()
     '''
     # Print critical metrics
+    print(f"Args: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {time_to_change_weight=}, {speed_change=}")
     print(f"Max Height: {max(y_list):.2f} meters")
     print(f"Total Distance (Range): {x_list[-1]:.2f} meters")
-    print(f"Total Flight Time: {t_list[-1]:.2f} seconds")
+    print(f"Total Flight Time: {t_list[-1]:.2f} seconds\n")
 
 
 if __name__ == "__main__": # use for module

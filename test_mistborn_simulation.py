@@ -217,6 +217,24 @@ def test_simulate_projectile_motion_with_drag():
 
 # test_simulate_projectile_motion_with_drag()
 
+'''
+# Your function that handles printing
+def process_data(user, role):
+    print(f"Processing user: {user} with role: {role}")
+
+# Stacked decorators for combinatorial testing
+@pytest.mark.parametrize("user", ["alice", "bob", "charlie"])
+@pytest.mark.parametrize("role", ["admin", "guest"])
+def test_print_combinations(user, role):
+    # Simply call the function with no assertions
+    process_data(user, role)
+
+# 1. Define standard arguments as fixtures
+@pytest.fixture
+def static_arg():
+    return "I remain the same for all test cases"    
+'''
+
 def test_simulate_projectile_motion_with_drag_and_changing_weight():
     # simulate_projectile_motion_with_drag_and_changing_weight((165/2), 62.0, 0.0, 45.0, 0.05, 1.0) # Error of StopIteration, I think concerning change_time and t_list.
     # simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 0.0, 45.0, 0.05, 1.0) # Same as line above.
@@ -230,8 +248,19 @@ def test_simulate_projectile_motion_with_drag_and_changing_weight():
             # Then try to graph results for many variables at same time?
 
 
-test_simulate_projectile_motion_with_drag_and_changing_weight()
+# test_simulate_projectile_motion_with_drag_and_changing_weight()
 
+# define standard arguments as fixtures
+@pytest.fixture
+def static_arg_initial_velocity():
+    return 10.0
+
+# @pytest.fixture
+
+
+# Stacked decorators for combinatorial testing
+@pytest.mark.parametrize("radius", [0.171, 0.4275, 0.855, 1.2825, 1.71])
+@pytest.mark.parametrize("mass", [6.2, 15.5, 31.0, 62])
 
 def test_jump_and_change_weight_already_stored_weight():
     anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
