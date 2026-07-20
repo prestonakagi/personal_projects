@@ -255,12 +255,31 @@ def test_simulate_projectile_motion_with_drag_and_changing_weight():
 def static_arg_initial_velocity():
     return 10.0
 
-# @pytest.fixture
+@pytest.fixture
+def static_arg_angle_degree():
+    return 45.0
 
+@pytest.fixture
+def static_arg_time_to_change_weight():
+    return 0.1
+
+@pytest.fixture
+def static_arg_speed_change():
+    return 1.0
 
 # Stacked decorators for combinatorial testing
-@pytest.mark.parametrize("radius", [0.171, 0.4275, 0.855, 1.2825, 1.71])
-@pytest.mark.parametrize("mass", [6.2, 15.5, 31.0, 62])
+@pytest.mark.parametrize("radius", [0.171, 0.855, 1.71])
+@pytest.mark.parametrize("mass", [6.2, 31.0, 62])
+def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
+    radius, 
+    mass, 
+    static_arg_initial_velocity, 
+    static_arg_angle_degree, 
+    static_arg_time_to_change_weight, 
+    static_arg_speed_change):
+    simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
+
+test_combos_simulate_projectile_motion_with_drag_and_changing_weight()
 
 def test_jump_and_change_weight_already_stored_weight():
     anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
@@ -281,5 +300,9 @@ def test_jump_and_change_weight_already_stored_weight():
 
 # TODO: 05JUL26, jump_and_change_weight NOT showing a plot (like a with drag).
 # test_jump_and_change_weight_already_stored_weight()
+
+# if __name__ == "__main__":
+#     # This automatically passes the "-s" flag directly to pytest from Python
+#     pytest.main(["-s", __file__])
 
 print("\nEnd testing")
