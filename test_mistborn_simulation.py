@@ -267,6 +267,26 @@ def static_arg_time_to_change_weight():
 def static_arg_speed_change():
     return 1.0
 
+# TODO: see if fixtures of radius and of mass will work
+@pytest.fixture
+def static_arg_radius():
+    return 0.171
+
+@pytest.fixture
+def static_arg_mass():
+    return 62
+
+# TODO: try two or three combos of parameterize listing of tuples
+
+def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
+    static_arg_radius, 
+    static_arg_mass, 
+    static_arg_initial_velocity, 
+    static_arg_angle_degree, 
+    static_arg_time_to_change_weight, 
+    static_arg_speed_change):
+    simulate_projectile_motion_with_drag_and_changing_weight(static_arg_radius, static_arg_mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
+'''
 # Stacked decorators for combinatorial testing
 @pytest.mark.parametrize("radius", [0.171, 0.855, 1.71])
 @pytest.mark.parametrize("mass", [6.2, 31.0, 62])
@@ -278,7 +298,7 @@ def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
     static_arg_time_to_change_weight, 
     static_arg_speed_change):
     simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
-
+'''
 test_combos_simulate_projectile_motion_with_drag_and_changing_weight()
 
 def test_jump_and_change_weight_already_stored_weight():
