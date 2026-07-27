@@ -247,9 +247,14 @@ def test_simulate_projectile_motion_with_drag_and_changing_weight():
     # TODO: can test lists of each arguement and in module comment out plotting and just print out metrics.
             # Then try to graph results for many variables at same time?
     simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 1.0, 1.0) # Max Height: 33.82 meters, Total Distance (Range): 96.02 meters, Total Flight Time: 5.20 seconds
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 2.0, 1.0)
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 3.0, 1.0)
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 4.0, 1.0)
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
+    
 
 
-# test_simulate_projectile_motion_with_drag_and_changing_weight()
+test_simulate_projectile_motion_with_drag_and_changing_weight()
 
 '''
 # define standard arguments as fixtures
@@ -318,7 +323,7 @@ def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
     static_arg_speed_change):
     simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
 '''
-test_combos_simulate_projectile_motion_with_drag_and_changing_weight(static_arg_radius, static_arg_mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
+# test_combos_simulate_projectile_motion_with_drag_and_changing_weight(static_arg_radius, static_arg_mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
 
 def test_jump_and_change_weight_already_stored_weight():
     anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
