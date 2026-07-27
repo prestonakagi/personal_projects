@@ -281,13 +281,21 @@ def static_arg_mass():
 # TODO: try two or three combos of parameterize listing of tuples
 '''
 
-@pytest.mark.parametrize("static_arg_radius", "static_arg_mass", "static_arg_initial_velocity", "static_arg_angle_degree", "static_arg_time_to_change_weight", "static_arg_speed_change", [
+@pytest.mark.parametrize("static_arg_radius, static_arg_mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change", [
     (0.855, 62.0, 0.0, 45.0, 1.0, 1.0), 
     (0.855, 62.0, 0.0, 45.0, 2.0, 1.0), 
     (0.855, 62.0, 0.0, 45.0, 3.0, 1.0), 
     (0.855, 62.0, 0.0, 45.0, 4.0, 1.0), 
     (0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
 ])
+
+# @pytest.mark.parametrize(["static_arg_radius", "static_arg_mass", "static_arg_initial_velocity", "static_arg_angle_degree", "static_arg_time_to_change_weight", "static_arg_speed_change"], [
+#     (0.855, 62.0, 0.0, 45.0, 1.0, 1.0), 
+#     (0.855, 62.0, 0.0, 45.0, 2.0, 1.0), 
+#     (0.855, 62.0, 0.0, 45.0, 3.0, 1.0), 
+#     (0.855, 62.0, 0.0, 45.0, 4.0, 1.0), 
+#     (0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
+# ])
 
 def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
     static_arg_radius, 
@@ -310,7 +318,7 @@ def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
     static_arg_speed_change):
     simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
 '''
-test_combos_simulate_projectile_motion_with_drag_and_changing_weight()
+test_combos_simulate_projectile_motion_with_drag_and_changing_weight(static_arg_radius, static_arg_mass, static_arg_initial_velocity, static_arg_angle_degree, static_arg_time_to_change_weight, static_arg_speed_change)
 
 def test_jump_and_change_weight_already_stored_weight():
     anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
