@@ -239,17 +239,19 @@ def test_simulate_projectile_motion_with_drag_and_changing_weight():
     # simulate_projectile_motion_with_drag_and_changing_weight((165/2), 62.0, 0.0, 45.0, 0.05, 1.0) # Error of StopIteration, I think concerning change_time and t_list.
     # simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 0.0, 45.0, 0.05, 1.0) # Same as line above.
     # simulate_projectile_motion_with_drag_and_changing_weight(82.5, 62.0, 10.0, 45.0, 0.05, 1.0) # Error of StopIteration.
-    simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 0.05, 1.0) # Max Height: 34.62 meters, Total Distance (Range): 99.54 meters, Total Flight Time: 5.26 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 0.05, 1.0) # Max Height: 34.62 meters, Total Distance (Range): 99.54 meters, Total Flight Time: 5.26 seconds
     # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 0.0, 45.0, 0.05, 1.0) # With speed_change, the initial velocity of zero does not stay zero, so no vertical line going down at x = 0. Output same as line above.
     # NOTE: for motion with drag, initial velocity cannot be 0!
-    simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 3.50, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.24 meters, Total Flight Time: 5.29 seconds
-    simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 2.30, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.78 meters, Total Flight Time: 5.29 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 3.50, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.24 meters, Total Flight Time: 5.29 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 2.30, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.78 meters, Total Flight Time: 5.29 seconds
     # TODO: can test lists of each arguement and in module comment out plotting and just print out metrics.
             # Then try to graph results for many variables at same time?
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 1.0, 1.0) # Max Height: 33.82 meters, Total Distance (Range): 96.02 meters, Total Flight Time: 5.20 seconds
 
 
 # test_simulate_projectile_motion_with_drag_and_changing_weight()
 
+'''
 # define standard arguments as fixtures
 @pytest.fixture
 def static_arg_initial_velocity():
@@ -270,13 +272,22 @@ def static_arg_speed_change():
 # TODO: see if fixtures of radius and of mass will work
 @pytest.fixture
 def static_arg_radius():
-    return 0.171
+    return 0.855
 
 @pytest.fixture
 def static_arg_mass():
     return 62
 
 # TODO: try two or three combos of parameterize listing of tuples
+'''
+
+@pytest.mark.parametrize("static_arg_radius", "static_arg_mass", "static_arg_initial_velocity", "static_arg_angle_degree", "static_arg_time_to_change_weight", "static_arg_speed_change", [
+    (0.855, 62.0, 0.0, 45.0, 1.0, 1.0), 
+    (0.855, 62.0, 0.0, 45.0, 2.0, 1.0), 
+    (0.855, 62.0, 0.0, 45.0, 3.0, 1.0), 
+    (0.855, 62.0, 0.0, 45.0, 4.0, 1.0), 
+    (0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
+])
 
 def test_combos_simulate_projectile_motion_with_drag_and_changing_weight(
     static_arg_radius, 
