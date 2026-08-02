@@ -246,11 +246,17 @@ def test_simulate_projectile_motion_with_drag_and_changing_weight():
     # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 2.30, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.78 meters, Total Flight Time: 5.29 seconds
     # TODO: can test lists of each arguement and in module comment out plotting and just print out metrics.
             # Then try to graph results for many variables at same time?
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 1.0, 1.0) # Max Height: 33.82 meters, Total Distance (Range): 96.02 meters, Total Flight Time: 5.20 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 1.0, 1.0) # Max Height: 33.82 meters, Total Distance (Range): 96.02 meters, Total Flight Time: 5.20 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 2.0, 1.0)
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 3.0, 1.0)
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 4.0, 1.0)
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
+
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 11.25, 2.0, 1.0)
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 22.5, 2.0, 1.0)
     simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 2.0, 1.0)
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 3.0, 1.0)
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 4.0, 1.0)
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 62.5, 2.0, 1.0)
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 80.0, 2.0, 1.0)
     
 
 

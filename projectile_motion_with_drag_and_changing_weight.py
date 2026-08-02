@@ -119,7 +119,7 @@ def simulate_projectile_motion_with_drag_and_changing_weight(radius, mass, initi
     # 2. Initial Conditions
     x, y = 0.0, 0.0       # Starting position
     v0 = 50.0             # Initial velocity (m/s)
-    angle = 45.0          # Launch angle (degrees)
+    angle = angle_degree  # Launch angle (degrees)
     rad_angle = np.radians(angle)
 
     vx = v0 * np.cos(rad_angle)
