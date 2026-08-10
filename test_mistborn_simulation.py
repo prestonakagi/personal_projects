@@ -246,21 +246,52 @@ def test_simulate_projectile_motion_with_drag_and_changing_weight():
     # simulate_projectile_motion_with_drag_and_changing_weight(0.825, 62.0, 10.0, 45.0, 2.30, 1.0) # Max Height: 34.84 meters, Total Distance (Range): 99.78 meters, Total Flight Time: 5.29 seconds
     # TODO: can test lists of each arguement and in module comment out plotting and just print out metrics.
             # Then try to graph results for many variables at same time?
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 1.0, 1.0) # Max Height: 33.82 meters, Total Distance (Range): 96.02 meters, Total Flight Time: 5.20 seconds
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 2.0, 1.0)
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 3.0, 1.0)
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 4.0, 1.0)
-    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 5.0, 1.0)
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.5, 1.0) # Max Height: 33.82 meters, Total Distance (Range): 96.02 meters, Total Flight Time: 5.20 seconds
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 26.43, 45.0, 0.5, 1.0) # 50 m/s for initial velocity to get total distance about 95 m
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 17.56, 45.0, 1.7, 1.0)
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 17.56, 45.0, 2.1, 1.0)
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 25.0, 45.0, 5.0, 1.0)
 
     # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 11.25, 2.0, 1.0)
     # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 22.5, 2.0, 1.0)
     # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 45.0, 2.0, 1.0)
     # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 62.5, 2.0, 1.0)
     # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 0.0, 80.0, 2.0, 1.0)
+
+    # default for storing weight and using weight fractions each 0.1 (of Twinborn's self.body_weight_potential = default 10.0 (thought of as 100% potential to use Twinborn's mass) and of metal_fero_instance.weight_stored), when using weight then added to vx at time_to_change_weight.
+        # does not actually change Twinborn's mass, just adds a magnitude to Vx (at time of time_to_change_weight)
+    # initial velocity is current speed (v0 was 7 and after 1 burn) = 15.87. and
+    # Testing speed change by using original Twinborn weight of 62.0.
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (0.3 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (0.5 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (0.7 * 10.0)) 
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (0.9 * 10.0))   
     
+    # # testing storing weight while jumping, so negative speed_change.
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (-0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (-0.3 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (-0.5 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (-0.7 * 10.0)) 
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.8, (-0.9 * 10.0)) 
 
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 10.0, 0.2, (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 27.5, 0.2, (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.2, (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 62.5, 0.2, (0.1 * 10.0)) 
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 80.0, 0.2, (0.1 * 10.0))
 
-test_simulate_projectile_motion_with_drag_and_changing_weight()
+    # final tests
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, 0.2, (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 26.43, 45.0, 0.2, (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, (0.25 * 2.17), (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, (0.50 * 2.17), (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, (0.25 * 2.17), (0.1 * 10.0))
+    # simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, (0.25 * 2.17), (0.7 * 10.0))
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, (0.25 * 2.17), (-0.1 * 10.0))
+    simulate_projectile_motion_with_drag_and_changing_weight(0.855, 62.0, 15.87, 45.0, (0.25 * 2.17), (-0.7 * 10.0))
+
+# test_simulate_projectile_motion_with_drag_and_changing_weight()
 
 '''
 # define standard arguments as fixtures
