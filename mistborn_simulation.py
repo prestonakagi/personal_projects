@@ -333,7 +333,7 @@ class Twinborn(Metalborn):
 
     # use burn and/or flare method(s) after use store method then use_stored___ method.
     # make jump method that gives user input option to use stored weight during a jump with drag (at a specific time)
-    def jump_and_change_weight(self, allo_type_of_metal_instance, fero_type_of_metal_instance, anchor_instance, radius_for_drag, fraction_stored_weight_to_use, time_to_change_weight):
+    def jump_and_change_weight(self, allo_type_of_metal_instance, fero_type_of_metal_instance, anchor_instance, fraction_stored_weight_to_use, time_to_change_weight, radius_for_drag=0.855):
         """
         Need to have stored weight first to use this method, even if will store more weight.
         """
