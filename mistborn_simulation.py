@@ -453,6 +453,29 @@ Launch angle theta degrees input but convert to radians
 Gravity acceleration 9.81 m/s²
 
 """
+"""
+anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
+a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")    
+a_steel2 = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
+f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron", weight_stored= 0)
+f_iron2 = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
+# pusher_skimmer1 to test use stored weight
+pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=15.87, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+# pusher_skimmer 2 to test store_weight_while_jumping
+pusher_skimmer2 = Twinborn(a_steel2, f_iron2, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=False, want_drag_projectile=True)
+# body weight potential is default 10.0
+pusher_skimmer2.body_weight_potential = 2.0
+# pusher_skimmer1 to test using stored weight while jumping
+# pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_store=0.1)
+pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.1)
+pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.2, fraction_stored_weight_to_use= 0.1)
+    # burn result be simulate function(0.855 jump and change weight default, 
+    # 62.0 Twinborn default, 15.87 Twinborn(Metalborn) karg, 
+    # 45.0 Anchor.force_angle_degree default, 
+    # 0.2 jump_and_change_weight method kwarg, 
+    # 0.1 same method fraction_stored_weight_to_use kwarg default (results in 1 for speed_change, cause default is 10 for Twinborn.body_weight_potential we)
+"""
+
 
 if __name__ == "__main__": # use for module
     pass

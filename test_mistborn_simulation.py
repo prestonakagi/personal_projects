@@ -366,7 +366,7 @@ def test_jump_and_change_weight_already_stored_weight():
     anchor = Anchor(anchor_mass=550.0, force_angle_degree=45.0)
     a_steel = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")    
     a_steel2 = AlloSteel(initial_mass=1.3, remaining_mass=1.3, name_of_metal_key="Allo Steel")
-    f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
+    f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron", weight_stored= 0)
     f_iron2 = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
     # pusher_skimmer1 to test use stored weight
     pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=15.87, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
@@ -377,6 +377,7 @@ def test_jump_and_change_weight_already_stored_weight():
 
     # pusher_skimmer1 to test using stored weight while jumping
     # pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_store=0.1)
+    pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.1)
     pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.2, fraction_stored_weight_to_use= 0.1)
         # burn result be simulate function(0.855 jump and change weight default, 
         # 62.0 Twinborn default, 15.87 Twinborn(Metalborn) karg, 
@@ -385,11 +386,11 @@ def test_jump_and_change_weight_already_stored_weight():
         # 0.1 same method fraction_stored_weight_to_use kwarg default (results in 1 for speed_change, cause default is 10 for Twinborn.body_weight_potential we)
     # pusher_skimmer1.burn(a_steel, anchor, (165/2))
     # pusher_skimmer2 to test storing weight while jumping
-    pusher_skimmer2.store_weight(f_iron2, weight_fraction_to_store=0.1)
-    pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, (1.65/2), 0.8, 0.05)
+    # pusher_skimmer2.store_weight(f_iron2, weight_fraction_to_store=0.1)
+    # pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, (1.65/2), 0.8, 0.05)
 
 # TODO: 05JUL26, jump_and_change_weight NOT showing a plot (like a with drag).
-# test_jump_and_change_weight_already_stored_weight()
+test_jump_and_change_weight_already_stored_weight()
 
 # if __name__ == "__main__":
 #     # This automatically passes the "-s" flag directly to pytest from Python
