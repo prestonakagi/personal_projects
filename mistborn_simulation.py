@@ -185,7 +185,7 @@ class Mistborn(Metalborn):
 class Twinborn(Metalborn):
     def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False, has_stored_weight=False, has_stored_speed=False, body_speed_potential=10.0, body_weight_potential=10.0):
         # super() calls the Parent's __init__ to inherit Parent's specified attributes
-        super().__init__(initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False)
+        super().__init__(initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False) #NOTE: TODO: these defaults seem to overwrite instance's kwarg values, I think.
         self.has_stored_weight = has_stored_weight
         self.has_stored_speed = has_stored_speed
         self.body_speed_potential = body_speed_potential
@@ -369,7 +369,8 @@ class Twinborn(Metalborn):
             if self.want_drag_projectile == True and self.want_simple_projectile == False:
                 simulate_projectile_motion_with_drag_and_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, time_to_change_weight=time_to_change_weight, speed_change=speed_change)
             elif self.want_drag_projectile == False and self.want_simple_projectile == True:
-                simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
+                # simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
+                print(f"{self.want_drag_projectile=}\n{self.want_simple_projectile=}")
             elif self.want_drag_projectile == True and self.want_simple_projectile == True:
                 simulate_projectile_motion(self.current_speed, anchor_instance.force_angle_degree)
                 simulate_projectile_motion_with_drag_and_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, time_to_change_weight=time_to_change_weight, speed_change=speed_change)
