@@ -369,11 +369,11 @@ def test_jump_and_change_weight_already_stored_weight():
     f_iron = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron", weight_stored= 0)
     f_iron2 = FeroIron(initial_mass=1.0, remaining_mass=1.0, name_of_metal_key="Fero Iron")
     # pusher_skimmer1 to test use stored weight
-    pusher_skimmer1 = Twinborn(a_steel, f_iron, initial_speed=0.0, current_speed=15.87, body_mass=62.0, want_simple_projectile=True, want_drag_projectile=True)
+    pusher_skimmer1 = Twinborn(a_steel, f_iron, 0.0, 15.87, True, True, body_mass=62.0)
     # pusher_skimmer 2 to test store_weight_while_jumping
-    pusher_skimmer2 = Twinborn(a_steel2, f_iron2, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=False, want_drag_projectile=True)
+    # pusher_skimmer2 = Twinborn(a_steel2, f_iron2, initial_speed=0.0, current_speed=0.0, body_mass=62.0, want_simple_projectile=False, want_drag_projectile=True)
     # body weight potential is default 10.0
-    pusher_skimmer2.body_weight_potential = 2.0
+    # pusher_skimmer2.body_weight_potential = 2.0
 
     # pusher_skimmer1 to test using stored weight while jumping
     # pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_store=0.1)

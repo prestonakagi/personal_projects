@@ -37,7 +37,7 @@ class Metalborn:
     Assume anchor for pushing is straight behind the Metalborn, and anchor for pulling is straight in front. 
     """
     # The initializer method (constructor) to set up properties
-    def __init__(self, initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False):
+    def __init__(self, initial_speed, current_speed, want_simple_projectile, want_drag_projectile, body_mass=62.0, position_x=0.0, position_y=0.0):
         self.initial_speed = initial_speed   # Instance attribute 
         self.current_speed = current_speed
         self.body_mass = body_mass
@@ -183,9 +183,9 @@ class Mistborn(Metalborn):
             print(f"Can't do neither simple and drag projectile!")
 
 class Twinborn(Metalborn):
-    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False, has_stored_weight=False, has_stored_speed=False, body_speed_potential=10.0, body_weight_potential=10.0):
+    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, want_simple_projectile, want_drag_projectile, body_mass=62.0, position_x=0.0, position_y=0.0, has_stored_weight=False, has_stored_speed=False, body_speed_potential=10.0, body_weight_potential=10.0):
         # super() calls the Parent's __init__ to inherit Parent's specified attributes
-        super().__init__(initial_speed, current_speed, body_mass=62.0, position_x=0.0, position_y=0.0, want_simple_projectile=True, want_drag_projectile=False) #NOTE: TODO: these defaults seem to overwrite instance's kwarg values, I think.
+        super().__init__(initial_speed, current_speed, want_simple_projectile, want_drag_projectile, body_mass=62.0, position_x=0.0, position_y=0.0) #NOTE: TODO: these defaults seem to overwrite instance's kwarg values, I think.
         self.has_stored_weight = has_stored_weight
         self.has_stored_speed = has_stored_speed
         self.body_speed_potential = body_speed_potential
