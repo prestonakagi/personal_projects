@@ -183,7 +183,7 @@ class Mistborn(Metalborn):
             print(f"Can't do neither simple and drag projectile!")
 
 class Twinborn(Metalborn):
-    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, want_simple_projectile, want_drag_projectile, body_mass=62.0, position_x=0.0, position_y=0.0, has_stored_weight=False, has_stored_speed=False, body_speed_potential=10.0, body_weight_potential=10.0):
+    def __init__(self, metal_allo_instance, metal_fero_instance, initial_speed, current_speed, want_simple_projectile, want_drag_projectile, body_mass=62.0, position_x=0.0, position_y=0.0, has_stored_weight=False, has_stored_speed=False, body_speed_potential=100.0, body_weight_potential=100.0):
         # super() calls the Parent's __init__ to inherit Parent's specified attributes
         super().__init__(initial_speed, current_speed, want_simple_projectile, want_drag_projectile, body_mass=62.0, position_x=0.0, position_y=0.0) #NOTE: TODO: these defaults seem to overwrite instance's kwarg values, I think.
         self.has_stored_weight = has_stored_weight
