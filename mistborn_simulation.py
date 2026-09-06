@@ -227,7 +227,16 @@ class Twinborn(Metalborn):
         """
         Updates metal instance's weight stored attribute and subtracts from self body weight potential.
         Returns fraction of weight stored (to be used to add to Twinborn's current speed) as a negative float.
-        """
+        TODO: concept is storing weight slows down speed (vx) but never has magnitude less than zero.
+        vx initial = 0.7071*v0
+            if v0 = 15.9, then vx initial about 11.24289. vx gradually decreases due to drag, so vx initial is max vx during flight.
+        A negative speed_change's magnitude max is 0.7071*initial_velocity.
+        So store_weight_while_jumping method's self.body_weight_potential2 * weight_fraction_to_store needs <= 0.7071*initial_velocity.
+        After initial Twinborn.store_weight method, self.body_weight_potential2 = self.body_weight_potential1 - (self.body_weight_potential1 * weight_fraction_to_store)
+        (self.body_weight_potential initial * (1 - weight_fraction_to_store)) * weight_fraction_to_store
+        (100 * (1 - weight_fraction_to_store)) * weight_fraction_to_store <= 0.7071*initial_velocity
+        weight_fraction_to_store = 0.1:  9 is it <= 0.7071*initial_velocity?
+                """
         # check if metal_fero_instance is an instance of FeroIron
         if isinstance(metal_fero_instance, FeroIron):
             storing_weight_fraction = self.body_weight_potential * weight_fraction_to_store
