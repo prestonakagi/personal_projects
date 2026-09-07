@@ -212,8 +212,10 @@ def test_simulate_projectile_motion_with_drag():
     # simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 45.0) # vertical line going down at x = 0.
     # NOTE: for motion with drag, initial velocity cannot be 0!
     # simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 90.0) # vertical line going down at x = 0.
-    simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 90.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
+    # simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 90.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
         # initial_velocity is technically vector in x and y directions. 90 degrees is about 1.571 radians, cosine of that is zero, so no horizontal movement!
+    simulate_projectile_motion_with_drag(0.825, 0.620, 10.0, 45.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
+
 
 # test_simulate_projectile_motion_with_drag()
 
