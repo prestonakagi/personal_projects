@@ -378,10 +378,13 @@ def test_jump_and_change_weight_already_stored_weight():
     # body weight potential is default 100.0
     # pusher_skimmer2.body_weight_potential = 2.0 # TODO: doesn't fill the condition in jump_and_change_weight method; seems have to do store_weight method before.
 
-    # pusher_skimmer1 to test using stored weight while jumping
+    # pusher_skimmer1 to test using STORING weight while jumping
     # pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_store=0.1)
     pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.1)
-    pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.7)
+    # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.7)
+    # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= (0.01 / 0.9)) # speed_change is -1.0
+    pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= (7 * 0.01 / 0.9)) # speed_change is -7.0
+
     # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 1.085, fraction_stored_weight_to_use= 0.1)
         # burn result be simulate function(0.855 jump and change weight default, 
         # 62.0 Twinborn default, 15.87 Twinborn(Metalborn) karg, 
@@ -389,11 +392,12 @@ def test_jump_and_change_weight_already_stored_weight():
         # 0.2 jump_and_change_weight method kwarg, 
         # 0.1 same method fraction_stored_weight_to_use kwarg default (results in 1 for speed_change, cause default is 10 for Twinborn.body_weight_potential we)
     # pusher_skimmer1.burn(a_steel, anchor, (165/2))
-    # pusher_skimmer2 to test storing weight while jumping
+
+    # pusher_skimmer2 to test STORED weight while jumping
     # to calculate Twinborn.store_weight(..., weight_fraction_to_store= ___) --> ((speed_change / fraction_stored_weight_to_use) - 100) / 100
     pusher_skimmer2.store_weight(f_iron2, weight_fraction_to_store=0.1)
-    # pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= (0.01 / 0.9)) # speed_change is -1.0
-    pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= (7 * 0.01 / 0.9)) # speed_change is -7.0
+    # pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.1)    
+    pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.7)    
 
 
 # TODO: 05JUL26, jump_and_change_weight NOT showing a plot (like a with drag).
