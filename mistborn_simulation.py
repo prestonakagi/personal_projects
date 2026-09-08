@@ -367,9 +367,9 @@ class Twinborn(Metalborn):
             while weight_usage.lower() not in weight_usages:
                 weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
                 if weight_usage.lower() == 'stored':
-                    speed_change = self.use_stored_weight(fero_type_of_metal_instance, weight_fraction_to_use=fraction_stored_weight_to_use)
+                    speed_change = self.use_stored_weight(fero_type_of_metal_instance, weight_fraction_to_store=fraction_stored_weight_to_use)
                 elif weight_usage.lower() == 'storing':
-                    speed_change = self.store_weight_while_jumping(fero_type_of_metal_instance, weight_fraction_to_store=fraction_stored_weight_to_use)
+                    speed_change = self.store_weight_while_jumping(fero_type_of_metal_instance, weight_fraction_to_use=fraction_stored_weight_to_use)
                 else:
                     print(f"Need to enter the word stored or the word storing!")
                     weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
