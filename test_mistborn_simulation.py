@@ -214,7 +214,7 @@ def test_simulate_projectile_motion_with_drag():
     # simulate_projectile_motion_with_drag(0.825, 62.0, 0.0, 90.0) # vertical line going down at x = 0.
     # simulate_projectile_motion_with_drag(0.825, 62.0, 10.0, 90.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
         # initial_velocity is technically vector in x and y directions. 90 degrees is about 1.571 radians, cosine of that is zero, so no horizontal movement!
-    simulate_projectile_motion_with_drag(0.825, 0.620, 10.0, 45.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
+    simulate_projectile_motion_with_drag(0.825, 0.620, 15.9, 45.0) # Max Height: 4.85 meters, Total Distance (Range): 0.00 meters, Total Flight Time: 1.99 seconds
 
 
 # test_simulate_projectile_motion_with_drag()
@@ -380,8 +380,8 @@ def test_jump_and_change_weight_already_stored_weight():
 
     # pusher_skimmer1 to test using stored weight while jumping
     # pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_store=0.1)
-    # pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.7)
-    # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.1)
+    pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.1)
+    pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.7)
     # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 1.085, fraction_stored_weight_to_use= 0.1)
         # burn result be simulate function(0.855 jump and change weight default, 
         # 62.0 Twinborn default, 15.87 Twinborn(Metalborn) karg, 
