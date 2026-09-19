@@ -390,16 +390,52 @@ class Twinborn(Metalborn):
             print(f"\nYou have not stored any weight yet. First store some weight and then jump again.")
 
 
-    '''
-    def jump_and_multiple_times_change_weight(self,):
-    # Call a function similar to method jump_and_change_weight using 
-    # drag and changing weight mod function but don't show plot(s). 
-    # Save total flight time (t_list[-1]) in a variable.
-    # In a user input, show total flight time that was saved.
-    # Then the user enters times will change weight, type next,
-    # then user enters each time's fraction of weight change. The inputs save as two lists.
-    # Iterate thru the two lists at same time to simulate_projectile_motion_with_drag_and_multiple_changing_weight method.
-    '''
+    
+    def jump_and_multiple_times_change_weight(self, allo_type_of_metal_instance, fero_type_of_metal_instance, anchor_instance, fraction_stored_weight_to_use=0.1, time_to_change_weight=0.2, radius_for_drag=0.855):
+        # Call a function similar to method jump_and_change_weight using 
+        # drag and changing weight mod function but don't show plot(s). 
+        # Save total flight time (t_list[-1]) in a variable.
+        # In a user input, show total flight time that was saved.
+        # Then the user enters times will change weight, type next, then either 'storing' or 'use stored',
+        # then user enters each time's fraction of weight change. The inputs save as three lists.
+        # Iterate thru the three lists at same time to simulate_projectile_motion_with_drag_and_multiple_changing_weight method.
+
+        """
+        Need to have stored weight first to use this method, even if will store more weight.
+        """
+        ways_to_jump = ['burn', 'flare']
+        if self.has_stored_weight:
+            jump_type = ""
+            while jump_type.lower() not in ways_to_jump:
+                jump_type = input(f"Do you want to burn or flare to jump? ")
+                if jump_type.lower() == "burn":
+                    self.burn_for_Twinborn(allo_type_of_metal_instance, anchor_instance)
+                elif jump_type.lower() == "flare":
+                    self.flare_for_Twinborn(allo_type_of_metal_instance, anchor_instance)
+                else: 
+                    print(f"Need to enter the word burn or the word flare!")
+                    jump_type = input(f"Do you want to burn or flare to jump? ")       
+        
+        one_jump_results = multiple_changing_weight.time_projectile_motion_with_drag_and_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, time_to_change_weight=time_to_change_weight, speed_change=speed_change)
+        time_of_one_jump = one_jump_results[0]
+        times, changes, fractions = [], [], []
+        # user input
+        go_to_next = False
+        while go_to_next == False:
+            time_want_change = input(f"What time, in seconds, do you want to change weight? If you are done, type done. ")
+            if time_want_change.lower() != 'done':
+                times.append(float(time_want_change))
+            else:
+                go_to_next = True
+
+        while len(changes) < len(times):
+            weight_change = input(f"For each time change weight ({len(times)} times will change weight), how will you change weight? Type 'storing' or 'use stored'. ")
+            changes.append(weight_change)
+
+        while len(fractions) < len(times):
+            fraction = input(f"For each time change weight ({len(times)} times will change weight), what fraction as a decimal will you change (or use) weight? ")
+            fractions.append(float(fraction))
+
 
 
 # Make Parent Class of Metal and Child Classes of each type_and_metal.

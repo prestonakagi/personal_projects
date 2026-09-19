@@ -107,6 +107,7 @@ def time_projectile_motion_with_drag_and_changing_weight(radius, mass, initial_v
     # Parameter speed_change: when Twinborn's weight increases at time_of_weight_change, a negative float will be added to and redefine (+=) vx[i].
     #                         When Twinborn's weight decreases at time_of_weight_change, a positive float will be added to and redefine (+=) vx[i].
     # This is only for one time changing weight.
+    # Return list of time_total_flight, max_height, total_distance
 
     # 1. Physics Parameters
     g = 9.81              # Gravity (m/s^2)
@@ -167,24 +168,14 @@ def time_projectile_motion_with_drag_and_changing_weight(radius, mass, initial_v
             has_changed = True  # Mark as done
 
         t += dt
+        
+    # Save critical metrics
+    max_height = max(y_list)
+    total_distance = x_list[-1]
+    time_total_flight = t_list[-1]
+    #print(f"Args: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {time_to_change_weight=}, {speed_change=}")
     
-    # 5. Plotting the Trajectory
-    plt.figure(figsize=(8, 5))
-    plt.plot(x_list, y_list, label="Projectile Trajectory", color="blue")
-    plt.axvline(x=x_list[t_list.index(next(filter(lambda x: x >= change_time, t_list)))], 
-                color="red", linestyle="--", label="Vx Change Point")
-    plt.title("Projectile Motion with Drag and Variable Vx")
-    plt.xlabel("Horizontal Distance (m)")
-    plt.ylabel("Vertical Distance (m)")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-    
-    # Print critical metrics
-    print(f"Args: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {time_to_change_weight=}, {speed_change=}")
-    print(f"Max Height: {max(y_list):.2f} meters")
-    print(f"Total Distance (Range): {x_list[-1]:.2f} meters")
-    print(f"Total Flight Time: {t_list[-1]:.2f} seconds\n")
+    return [time_total_flight, max_height, total_distance]
 
 
 def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
