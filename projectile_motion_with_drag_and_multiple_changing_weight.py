@@ -319,9 +319,23 @@ def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, ma
         binary search continually cuts your list in half to find the target index 
         in just a few operations.
     '''
+    # Convert lists to NumPy arrays if they aren't already
+    t_arr = np.array(t_list)
+    x_arr = np.array(x_list)
 
-    plt.axvline(x=x_list[t_list.index(next(filter(lambda x: x >= change_time, t_list)))], 
-                color="red", linestyle="--", label="Vx Change Point")
+    # change_times = [1.5, 3.0, 4.5]
+
+    for i, change_time in enumerate(times_to_change_weight):
+        # Instantly finds the index where t >= change_time using binary search
+        idx = np.searchsorted(t_arr, change_time)
+
+        # Optional boundary check to prevent IndexError if change_time exceeds max time
+        if idx < len(x_arr):
+            x_val = x_arr[idx]
+            line_label = "Vx Change Point" if i == 0 else ""
+            plt.axvline(x=x_val, color="red", linestyle="--", label=line_label)
+    # plt.axvline(x=x_list[t_list.index(next(filter(lambda x: x >= change_time, t_list)))], 
+                # color="red", linestyle="--", label="Vx Change Point")
     plt.title("Projectile Motion with Drag and Variable Vx")
     plt.xlabel("Horizontal Distance (m)")
     plt.ylabel("Vertical Distance (m)")
@@ -330,7 +344,7 @@ def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, ma
     plt.show()
     
     # Print critical metrics
-    print(f"Args for initial conditions: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {times_to_change_weight[0]=}, {speed_changes[0]=}")
+    print(f"Args for initial conditions: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {times_to_change_weight[0]=}, {speed_changes[0]=}\n{times_to_change_weight=}  {speed_changes=}")
     print(f"Max Height: {max(y_list):.2f} meters")
     print(f"Total Distance (Range): {x_list[-1]:.2f} meters")
     print(f"Total Flight Time: {t_list[-1]:.2f} seconds\n")
