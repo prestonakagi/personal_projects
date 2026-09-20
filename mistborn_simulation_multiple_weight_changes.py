@@ -436,6 +436,20 @@ class Twinborn(Metalborn):
             fraction = input(f"For each time change weight ({len(times)} times will change weight), what fraction as a decimal will you change (or use) weight? ")
             fractions.append(float(fraction))
 
+        # make a variable to store list of speed changes to use as arguement in the projectile drag weight function
+        speed_changes = []
+        for store_type, fraction_use in zip(changes, fractions):
+            if store_type.lower() == 'stored':
+                speed_change = self.use_stored_weight(fero_type_of_metal_instance, weight_fraction_to_store=fraction_use)
+                speed_changes.append(speed_change)
+            elif store_type.lower() == 'storing':
+                speed_change = self.store_weight_while_jumping(fero_type_of_metal_instance, weight_fraction_to_use=fraction_use)
+                speed_changes.append(speed_change)
+            else:
+                print(f"Somehow saved an input other than storing or used stored. Fix it!")
+
+        # Simulate and show plot of drag and multiple changing weight method.
+        multiple_changing_weight.simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, times, speed_changes)
 
 
 # Make Parent Class of Metal and Child Classes of each type_and_metal.

@@ -178,10 +178,10 @@ def time_projectile_motion_with_drag_and_changing_weight(radius, mass, initial_v
     return [time_total_flight, max_height, total_distance]
 
 
-def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, mass, initial_velocity, angle_degree, time_to_change_weight, speed_change):
+def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, mass, initial_velocity, angle_degree, times_to_change_weight, speed_changes):
     # Parameter speed_change: when Twinborn's weight increases at time_of_weight_change, a negative float will be added to and redefine (+=) vx[i].
     #                         When Twinborn's weight decreases at time_of_weight_change, a positive float will be added to and redefine (+=) vx[i].
-    # This is only for one time changing weight.
+    # This is for multiple times changing weight in one jump.
 
     # 1. Physics Parameters
     g = 9.81              # Gravity (m/s^2)
@@ -203,15 +203,17 @@ def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, ma
     # 3. Simulation Parameters
     dt = 0.001            # Time step (s)
     t = 0.0               # Initial time
-    change_time = time_to_change_weight     # Time at which Vx changes (s)
-    new_vx_to_add = speed_change         # The new Vx value after change_time (m/s)
-    has_changed = False   # Flag to ensure it only fires once
+    i = 0   # counter for user input lists.
+    change_time = times_to_change_weight[i]     # Time at which Vx changes (s)
+    new_vx_to_add = speed_changes[i]         # The new Vx value after change_time (m/s)
+    has_changed = False   # Flag to ensure it only fires once for current time to change.
 
     # Lists for plotting
     t_list, x_list, y_list = [], [], []
 
     # 4. Simulation Loop (Stops when it hits the ground)
     while y >= 0:
+        has_changed = False
         # Record current state
         t_list.append(t)
         x_list.append(x)
@@ -239,6 +241,7 @@ def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, ma
         # Check if we should alter Vx
         if t >= change_time and not has_changed:
             vx += new_vx_to_add         # Manually force the velocity change
+            i += 1 # advance user input lists.
             has_changed = True  # Mark as done
 
         t += dt
@@ -256,7 +259,7 @@ def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, ma
     plt.show()
     
     # Print critical metrics
-    print(f"Args: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {time_to_change_weight=}, {speed_change=}")
+    print(f"Args for initial conditions: {radius=}, {mass=}, {initial_velocity=}, {angle_degree=}, {times_to_change_weight[0]=}, {speed_changes[0]=}")
     print(f"Max Height: {max(y_list):.2f} meters")
     print(f"Total Distance (Range): {x_list[-1]:.2f} meters")
     print(f"Total Flight Time: {t_list[-1]:.2f} seconds\n")
