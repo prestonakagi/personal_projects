@@ -438,7 +438,7 @@ class Twinborn(Metalborn):
         # user input
         go_to_next = False
         while go_to_next == False:
-            time_want_change = input(f"What time, in seconds, do you want to change weight? If you are done, type done. ")
+            time_want_change = input(f"What time, in seconds, (total flight time = {time_of_one_jump:.5f} s) do you want to change weight? If you are done, type done. ")
             if time_want_change.lower() != 'done':
                 times.append(float(time_want_change))
             else:
