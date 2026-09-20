@@ -249,6 +249,77 @@ def simulate_projectile_motion_with_drag_and_multiple_changing_weight(radius, ma
     # 5. Plotting the Trajectory
     plt.figure(figsize=(8, 5))
     plt.plot(x_list, y_list, label="Projectile Trajectory", color="blue")
+    '''
+    # Define your list of multiple change times
+    change_times = [1.5, 3.0, 4.5]
+
+    # Loop through each time to draw a vertical line
+    for i, change_time in enumerate(change_times):
+        # Find the matching x coordinate
+        target_t = next(filter(lambda x: x >= change_time, t_list))
+        x_val = x_list[t_list.index(target_t)]
+
+        # Set the label only for the first line to avoid duplicate legend entries
+        line_label = "Vx Change Point" if i == 0 else ""
+
+        plt.axvline(x=x_val, color="red", linestyle="--", label=line_label)
+
+        Key Parameter Adjustments
+        enumerate(change_times): Tracks the current loop index (i). 
+        This prevents your plot legend from generating duplicate labels for every single line drawn.
+        line_label Conditional: Passes the descriptive label to plt.axvline only on the very first pass (i == 0). 
+        Subsequent lines use an empty string so your legend remains clean.
+
+        I can show you how to swap out the filter() function for a high-performance NumPy binary search (np.searchsorted).
+    
+        Since your t_list is monotonically increasing, you can completely eliminate the slow filter() loop and .index() lookups 
+        by using binary search. If you are already using NumPy for your plotting data, np.searchsorted() finds the exact index 
+        where a value should be inserted to maintain order, which is the fastest way to find your change points. 
+        If you prefer to stick to standard Python without external libraries, 
+        the built-in bisect.bisect_left() module achieves the exact same optimization.
+        
+        Option 1: The Fast NumPy Way (Recommended)
+        This approach scales incredibly well for large datasets because it runs optimized C-code under the hood.
+
+        import numpy as np
+
+        # Convert lists to NumPy arrays if they aren't already
+        t_arr = np.array(t_list)
+        x_arr = np.array(x_list)
+
+        change_times = [1.5, 3.0, 4.5]
+
+        for i, change_time in enumerate(change_times):
+            # Instantly finds the index where t >= change_time using binary search
+            idx = np.searchsorted(t_arr, change_time)
+
+            # Optional boundary check to prevent IndexError if change_time exceeds max time
+            if idx < len(x_arr):
+                x_val = x_arr[idx]
+                line_label = "Vx Change Point" if i == 0 else ""
+                plt.axvline(x=x_val, color="red", linestyle="--", label=line_label)
+
+                
+        import bisect
+
+        change_times = [1.5, 3.0, 4.5]
+
+        for i, change_time in enumerate(change_times):
+            # Instantly finds the index where t >= change_time
+            idx = bisect.bisect_left(t_list, change_time)
+
+            if idx < len(x_list):
+                x_val = x_list[idx]
+                line_label = "Vx Change Point" if i == 0 else ""
+                plt.axvline(x=x_val, color="red", linestyle="--", label=line_label)
+
+        Performance Comparison
+        Instead of reading through t_list element-by-element from the beginning 
+        every single time (which takes longer as your list grows), 
+        binary search continually cuts your list in half to find the target index 
+        in just a few operations.
+    '''
+
     plt.axvline(x=x_list[t_list.index(next(filter(lambda x: x >= change_time, t_list)))], 
                 color="red", linestyle="--", label="Vx Change Point")
     plt.title("Projectile Motion with Drag and Variable Vx")
