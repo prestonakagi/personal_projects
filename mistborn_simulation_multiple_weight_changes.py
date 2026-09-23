@@ -419,18 +419,18 @@ class Twinborn(Metalborn):
 
             # make a variable to store speed change to use as arguement in the timing projectile drag weight function
             # user input to choose how use weight, one time, during one jump.
-            weight_usages = ['stored', 'storing']
+            weight_usages = ['use stored', 'storing']
             weight_usage = ""
             speed_change_for_timing = 0.0
             while weight_usage.lower() not in weight_usages:
-                weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
-                if weight_usage.lower() == 'stored':
+                weight_usage = input(f"During the jump, how use your weight: use stored or storing? ")
+                if weight_usage.lower() == 'use stored':
                     speed_change_for_timing = self.use_stored_weight(fero_type_of_metal_instance, weight_fraction_to_store=first_fraction_stored_weight_to_use)
                 elif weight_usage.lower() == 'storing':
                     speed_change_for_timing = self.store_weight_while_jumping(fero_type_of_metal_instance, weight_fraction_to_use=first_fraction_stored_weight_to_use)
                 else:
-                    print(f"Need to enter the word stored or the word storing!")
-                    weight_usage = input(f"During the jump, how use your weight: stored or storing? ")
+                    print(f"Need to enter the word use stored or the word storing!")
+                    weight_usage = input(f"During the jump, how use your weight: use stored or storing? ")
 
         one_jump_results = multiple_changing_weight.time_projectile_motion_with_drag_and_changing_weight(radius_for_drag, self.body_mass, self.current_speed, anchor_instance.force_angle_degree, time_to_change_weight=first_time_to_change_weight, speed_change=speed_change_for_timing)
         time_of_one_jump = one_jump_results[0]
@@ -455,7 +455,7 @@ class Twinborn(Metalborn):
         # make a variable to store list of speed changes to use as arguement in the projectile drag weight function
         speed_changes = []
         for store_type, fraction_use in zip(changes, fractions):
-            if store_type.lower() == 'stored':
+            if store_type.lower() == 'use stored':
                 speed_change = self.use_stored_weight(fero_type_of_metal_instance, weight_fraction_to_store=fraction_use)
                 speed_changes.append(speed_change)
             elif store_type.lower() == 'storing':
