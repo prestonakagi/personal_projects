@@ -36,21 +36,25 @@ def test_jump_and_multiple_times_change_weight():
 
     # pusher_skimmer1 to test using STORED weight while jumping
     # pusher_skimmer1.use_stored_weight(f_iron, weight_fraction_to_store=0.1)
-    pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.1)
+    # pusher_skimmer1.store_weight(f_iron, weight_fraction_to_store= 0.1)
     # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= (0.01 / 0.9)) # speed_change is -1.0
     # pusher_skimmer1.jump_and_change_weight(a_steel, f_iron, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= (7 * 0.01 / 0.9)) # speed_change is -7.0
-    pusher_skimmer1.jump_and_multiple_times_change_weight(a_steel, f_iron, anchor, first_time_to_change_weight= 0.5425, first_fraction_stored_weight_to_use= (0.01 / 0.9)) # speed_change is -1.0
+    # pusher_skimmer1.jump_and_multiple_times_change_weight(a_steel, f_iron, anchor, first_time_to_change_weight= 0.5425, first_fraction_stored_weight_to_use= (0.01 / 0.9)) # speed_change is -1.0
     # pusher_skimmer1.jump_and_multiple_times_change_weight(a_steel, f_iron, anchor, first_time_to_change_weight= 0.5425, first_fraction_stored_weight_to_use= (7 * 0.01 / 0.9)) # speed_change is -7.0
 
     # pusher_skimmer2 to test STORING weight while jumping
     # to calculate Twinborn.store_weight(..., weight_fraction_to_store= ___) --> ((speed_change / fraction_stored_weight_to_use) - 100) / 100
-    pusher_skimmer2.store_weight(f_iron2, weight_fraction_to_store=0.1)
+    # pusher_skimmer2.store_weight(f_iron2, weight_fraction_to_store=0.1)
     # pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.1) # speed_change is 1.0
     # pusher_skimmer2.jump_and_change_weight(a_steel2, f_iron2, anchor, time_to_change_weight= 0.5425, fraction_stored_weight_to_use= 0.7) # speed_change is 7.0   
     # pusher_skimmer2.jump_and_multiple_times_change_weight(a_steel2, f_iron2, anchor, first_time_to_change_weight= 0.5425, first_fraction_stored_weight_to_use= 0.1)    
     # pusher_skimmer2.jump_and_multiple_times_change_weight(a_steel2, f_iron2, anchor, first_time_to_change_weight= 0.5425, first_fraction_stored_weight_to_use= 0.7)
 
     # pusher_skimmer3 to test STORING AND USE STORED weight while jumping.
+    pusher_skimmer3 = Twinborn(a_steel2, f_iron2, 0.0, 6.999, True, True, body_mass=62.0)
+    pusher_skimmer3.store_weight(f_iron2, weight_fraction_to_store=0.1)
+    pusher_skimmer3.jump_and_multiple_times_change_weight(a_steel2, f_iron2, anchor, first_time_to_change_weight= 0.5425, first_fraction_stored_weight_to_use= 0.1)    
+
 
 
 test_jump_and_multiple_times_change_weight()
