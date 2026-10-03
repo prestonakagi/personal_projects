@@ -1,6 +1,7 @@
 # read a CSV and clean up (potential) issues like 
 # blank values, edge whitespaces and quotes, 
 # removing leading dollar signs, etc.
+# Transform data types with different mod or in main file.
 
 import csv
 
@@ -32,8 +33,9 @@ def read_and_process_csv(name_of_file):
                     cell_no_quote = cell_stripped.strip('"')
                     # remove leading dollar sign and convert to float
                     if cell_no_quote.startswith("$"):
-                        clean_cell = float(cell_no_quote.lstrip("$"))
-                        # TODO: remove commas in Cost number as string.
+                        cell_no_dollar = cell_no_quote.lstrip("$")
+                        # remove commas in Cost number as string.
+                        clean_cell = cell_no_dollar.replace(",", "")
                     else:
                         clean_cell = cell_no_quote
 
@@ -44,9 +46,9 @@ def read_and_process_csv(name_of_file):
     return entries
 
 file_path = "C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_projects\\personal_projects\\Expenses Aggregated Copy"
-cleaned_entries = read_and_process_csv(file_path)
+# cleaned_entries = read_and_process_csv(file_path)
 
-print(f"first 5 rows of expenses:\n{cleaned_entries[0:6]}")
+# print(f"first 5 rows of expenses:\n{cleaned_entries[0:6]}")
 
 if __name__ == "__read_and_process_csv__":
-    read_and_process_csv("Expenses Aggregated Copy") # TODO: fix this so don't need an argument
+    read_and_process_csv(file_path) # TODO: fix this so don't need an argument
