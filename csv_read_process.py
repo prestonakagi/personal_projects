@@ -25,7 +25,7 @@ def read_and_process_csv(name_of_file):
             for cell in row:
                 # Replace empty strings with None
                 if cell == '':
-                    cell = None
+                    cell = None #TODO: seems to enter the not None previous inner list's element ("debit joint", "credit card", etc)
                 else:
                     # strip whitespaces
                     cell_stripped = cell.strip()
