@@ -24,20 +24,23 @@ date_format = "%A, %B %d, %Y"
 try:
     for i in range(1, len(cleaned_entries)): # start from first entry
         # transform each in place in each inner list.
-        # parse to datetime, then call .date()
-        cleaned_entries[i][DATE_INDEX] = dt.strptime(cleaned_entries[i][DATE_INDEX], date_format).date()
-        # Cost to float
-        cleaned_entries[i][COST_INDEX] = float(cleaned_entries[i][COST_INDEX])
+        if cleaned_entries[i][DATE_INDEX] is not None:
+            # parse to datetime, then call .date()
+            cleaned_entries[i][DATE_INDEX] = dt.strptime(cleaned_entries[i][DATE_INDEX], date_format).date()
+        else: continue
+        if cleaned_entries[i][COST_INDEX] is not None:
+            # Cost to float
+            cleaned_entries[i][COST_INDEX] = float(cleaned_entries[i][COST_INDEX])
+        else: continue
 
 except ValueError as e:
     print(f"Error at outer list index {i}\n{e}")
 
 # print(f"transformed cleaned_entries[0:6]=\n{cleaned_entries[0:6]}")
-print(f"\ncleaned_entries[199:201]") 
-#TODO: need fix indecies 0,1. transformed cleaned_entries[199] = ['credit card', 'credit card', '12.00', 'Venmo', 'debit Silvia']
-for j in range(198, 201):
-    print(f"{cleaned_entries[j]=}")
+# print(f"\ncleaned_entries[199:201]:") 
+# for j in range(198, 201):
+#     print(f"{cleaned_entries[j]=}")
 
-print(f"{cleaned_entries[192]=}")
+
 
 print("\nGood end!")
