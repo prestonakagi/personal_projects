@@ -25,7 +25,7 @@ def read_and_process_csv(name_of_file):
             for cell in row:
                 # Replace empty strings with None
                 if cell == '':
-                    cell = None #TODO: seems to enter the not None previous inner list's element ("debit joint", "credit card", etc)
+                    clean_cell = None
                 else:
                     # strip whitespaces
                     cell_stripped = cell.strip()
@@ -46,9 +46,9 @@ def read_and_process_csv(name_of_file):
     return entries
 
 file_path = "C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_projects\\personal_projects\\Expenses Aggregated Copy"
-# cleaned_entries = read_and_process_csv(file_path)
+cleaned_entries = read_and_process_csv(file_path)
 
-# print(f"first 5 rows of expenses:\n{cleaned_entries[0:6]}")
+print(f"first 5 rows of expenses:\n{cleaned_entries[0:6]}")
 
 if __name__ == "__read_and_process_csv__":
     read_and_process_csv(file_path) # TODO: fix this so don't need an argument
