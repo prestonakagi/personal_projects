@@ -1,4 +1,5 @@
 # from personal expenses as a CSV, address blank values and analyze expenses.
+# Calculate weekly total Cost.
 
 from csv_read_process import read_and_process_csv
 from datetime import datetime as dt
