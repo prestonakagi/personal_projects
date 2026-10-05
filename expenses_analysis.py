@@ -33,8 +33,10 @@ try:
         # transform each in place in each inner list.
         if cleaned_entries[i][DATE_INDEX] is not None:
             # parse to datetime, then call .date()
-            cleaned_entries[i][DATE_INDEX] = dt.strptime(cleaned_entries[i][DATE_INDEX], date_format).date()
-            new_row.append(cleaned_entries[i][DATE_INDEX])
+            # cleaned_entries[i][DATE_INDEX] = dt.strptime(cleaned_entries[i][DATE_INDEX], date_format).date()
+            # transform using pd.to_datetime()
+            p_datetime = pd.to_datetime(cleaned_entries[i][DATE_INDEX])
+            new_row.append(p_datetime)
         else: new_row.append(cleaned_entries[i][DATE_INDEX])
         if cleaned_entries[i][COST_INDEX] is not None:
             # Cost to float
@@ -68,18 +70,20 @@ print(f"{has_none_date=}\n{has_none_cost=}")
 # Can check sums by summing all Costs ignoring any None values
 
 # set date as df index
-df = df.set_index('Date') # None or NaN values in Index column is pandas.Index instance. TODO: groupby supposedly skips NaN values, but doesn't now; how ignore those values? Or should I just remove those rows that contain None values? 
+# df = df.set_index('Date') # None or NaN values in Index column is pandas.Index instance. TODO: groupby supposedly skips NaN values, but doesn't now; how ignore those values? Or should I just remove those rows that contain None values? 
 
 try:
     # group by week and sum costs
     # freq='W' ends week on Sundays
     # without .reset_index(), the dates would be the index; need dates as index for groupby. With it, dates are in a standard column, and default integer row index (0,1,2...)
-    # weekly_cost_df = df.groupby(pd.Grouper(key='Date', freq='W'))['Cost'].sum().reset_index()
+    weekly_cost_df = df.groupby(pd.Grouper(key='Date', freq='W'))['Cost'].sum().reset_index()
     # weekly_cost_df = df['Cost'].resample('W').sum().reset_index()
-    weekly_cost_df = df['Cost'].groupby(level=0).sum() # total cost each day
+    # weekly_cost_df = df['Cost'].groupby(level=0).sum() # total cost each day
 
 except TypeError as t:
-    print(f"\nError (with index): {t}")
+    # TypeError: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+    # NOTE: that TypeError was due to not having converted dates with pd.to_datetime()
+    print(f"\nError (with index): {t}\n")
 
 # print(pd.__version__) # version 3.0.6
 print(f"\n{weekly_cost_df=}")
@@ -100,9 +104,10 @@ test_costs = [10.50, 20.00, 15.75, 30.00, 22.50, 18.00, 45.00, 50.25, 35.10]
 
 test_none_dates = [
     # Week 1
-    '2026-10-05', None, '2026-10-07',
+    '2026-10-05', '2026-10-06', '2026-10-07',
     # Week 2 (Next week)
-    '2026-10-12', '2026-10-13', '2026-10-14',
+    # '2026-10-12', '2026-10-13', '2026-10-14',
+    None, None, None,
     # Week 3 (A completely different week / month)
     '2026-11-02', '2026-11-03', '2026-11-04'
 ]
