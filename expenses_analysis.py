@@ -84,4 +84,42 @@ except TypeError as t:
 # print(pd.__version__) # version 3.0.6
 print(f"\n{weekly_cost_df=}")
 
+'''
+# Define 9 dates spread across 3 different weeks
+test_dates = [
+    # Week 1
+    '2026-10-05', '2026-10-06', '2026-10-07',
+    # Week 2 (Next week)
+    '2026-10-12', '2026-10-13', '2026-10-14',
+    # Week 3 (A completely different week / month)
+    '2026-11-02', '2026-11-03', '2026-11-04'
+]
+
+# Define 9 matching mock values for Cost
+test_costs = [10.50, 20.00, 15.75, 30.00, 22.50, 18.00, 45.00, 50.25, 35.10]
+
+test_none_dates = [
+    # Week 1
+    '2026-10-05', None, '2026-10-07',
+    # Week 2 (Next week)
+    '2026-10-12', '2026-10-13', '2026-10-14',
+    # Week 3 (A completely different week / month)
+    '2026-11-02', '2026-11-03', '2026-11-04'
+]
+
+# Define 9 matching mock values for Cost
+test_none_costs = [10.50, 20.00, 15.75, 30.00, 22.50, 18.00, 45.00, 50.25, None]
+
+# Generate the DataFrame
+test_df = pd.DataFrame({
+    'Date': pd.to_datetime(test_none_dates),
+    'Cost': test_none_costs
+})
+
+test_weekly_cost_df = test_df.groupby(pd.Grouper(key='Date', freq='W'))['Cost'].sum().reset_index()
+
+# print(f"\n{test_df}")
+print(f"\n{test_weekly_cost_df}")
+'''
+
 print("\nGood end!")
