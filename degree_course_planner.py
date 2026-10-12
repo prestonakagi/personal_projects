@@ -1,0 +1,171 @@
+"""
+With a Graphic User Interface (GUI), plan a Bachelor's degree classes (not including general education classes) over several semesters, and plan weekly schedule of classes for the next semester.
+"""
+
+from tkinter import *
+# from tkinter import ttk  # for adding tabs to window
+from tkinter import filedialog # for saving a file and opening a file
+
+# How get data on degree catalog (SUU Professional Chemistry)? Couldn't use an API. 05OCT26 went to website, looked at source, copied text part listing courses and credits for main part of emphasis . 
+
+# Save data in instances of a Class for Course.
+"""
+Attributes:
+abbreviation_name (CHEM): str
+Abbreviation_number: str (or int)
+course_name: str
+co-requisite: str
+pre-requisites: list of str
+can_pre-req_be_concurrent: Boolean
+semester_offered: list of str
+credits: int
+fee: float
+has_passed: Boolean
+grid_row: int=0
+grid_column: int=0
+
+Methods:
+get Course (a Class) attribute.
+check if have passed a course
+"""
+"""
+GUI elements might need/want:
+menubar: file: open, save, exit. Edit: update passed courses.
+Open a file
+Save a file
+Add window tabs
+Grid layout
+Labels
+(listbox)
+User input
+(Scale or) progress bar
+Drag and drop (widgets)
+"""
+
+# function that after Course label initially made or drag and dropped checks if pre-requistite is finished or already planned in a past semester.
+
+
+# try a custom class for labels for semester season and year.
+"""
+SemesterLabel
+Attributes:
+season: str
+year: int
+grid_row: int=0
+grid_column: int=0
+"""
+
+# function to check if a course dropped into one of its correct season for semester (and even or odd year, if applicable). How do that??
+
+# function to update has_passed attribute (to True) of a course.
+
+# Make GUI labels for all not completed courses and have them all displayed (at least when a new file made. If opening an existing file, show any not placed?)
+
+# NOTE: any functions used in GUI widgets needs to be defined above Tk() start of GUI.
+
+'''
+# function for a submit button; just for educational info.
+def submit():
+	username = entry_instance_variable.get()
+	# thing to do like print(username)
+'''
+def drag_start(event):
+	widget_variable = event.widget
+	widget_variable.startX = event.x
+	widget_variable.startY = event.y
+
+def drag_motion(event):
+    widget_variable = event.widget
+    x = widget_variable.winfo_x() - widget_variable.startX + event.x
+    y = widget_variable.winfo_y() - widget_variable.startY + event.y
+    widget_variable.place(x=x, y=y)
+
+def saveFile():
+	file_variable = filedialog.asksaveasfile(initialdir="C:\\____\\____\\____", defaultextension='.fileExtention', filetypes=[("Text file", ".txt"), ("HTML file", ".html"), ("All files", ".*")])
+	file_content = variable_content_to_save.get(1.0, END) # in video example, a Text widget was saved, but had str(Text widget.get(1.0, END))
+	file_variable.write(file_content)
+	file.close()
+
+# Basic GUI
+"""
+from tkinter import *
+# from tkinter import ttk  # for adding tabs to window
+# from tkinter import filedialog # for saving a file and opening a file
+
+window = Tk()
+window.geometry("IntxInt")
+window.title("")
+
+'''
+# Notebook widget for adding tabs to a window
+notebook_variable = ttk.Notebook(window)  # widget that manages a collection of windows/displays
+tab1 = Frame(notebook_variable)
+tab2 = Frame(notebook_variable)
+notebook_variable.add(tab1, text="Tab 1")
+notebook_variable.add(tab2, text="Tab 2")
+notebook.pack(expand=True, fill="both") # expand to fill any space not otherwise used. # fill space on x and y axis.
+# Example to put a widget in a tab
+# Label(tab1, text="Wazup", width=50, height=25).pack()
+'''
+
+# Menu bar
+menubar Menu(window)
+window.config(menu=menubar)
+
+fileMenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="File", menu=fileMenu)
+fileMenu.add_command(label="Open", command=function_name_only)
+fileMenu.add_command(label="Save", command=function_name_only)
+# top - - - -  is called tearoff
+fileMenu.add_separator()
+fileMenu.add_command(label="Exit", command=quit)  # leave as quit
+
+editMenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Edit", menu=editMenu)
+editMenu.add_command(label="Update Passed Courses", command=function_name_only)
+
+
+# grid.  (just for notes, widget.pack() adds widget to window.)
+# widget.grid(row=0, column=0, columnspan=int)
+
+# Label: bd is border width. bg is background color. fg is text color. If use an image, use compound= 'top, left, etc".
+Label(window, text="string", font=("font_name", size:int, "bold, etc"), fg="color name or hexadecimal", bg="color", bd=int, pad or padx or pady= int)
+
+# Entry is user input textbox for single line.
+Entry(window)
+entry_variable.insert(0, "string") # default text
+
+button_variable = Button(window, text="string")
+# activebackground and activeforeground are the colors when the button is being clicked.
+button_variable.config(command=function_name_only, font=("font_name", size:int, "bold, etc"), bg=, etc.) # changes with .config() effect immediately without needing to recreate the widget.
+
+# something to show visually progress to end of degree; how much courses passed so far.
+# by Progressbar? Does progress bar always shown in window?
+bar = Progressbar(window, orient=HORIZONTAL, length=300)
+bar.pack(pady=10)
+percent = StringVar()
+text = StringVar()
+percent_label = Label(window, textvariable=percent).pack()
+text_label = Label(window, textvariable=text).pack()
+# make a function for the edit Update Passed Courses that one thing it does is update progress bar. In that function, need:
+percent.set(str(int(number_passed_courses_or_credits / total_number_of_courses_or_credits * 100)) + "%")
+text.set(str(number_passed_courses_or_credits) + "/" + str(total_number_of_courses_or_credits) + " total credits completed" OR " total number of courses planned"
+
+# Drag and drop
+# following for more than one Label
+label = Label(window, bg="red", width=10, height=5)
+label.place(x=0, y=0)
+
+label2 = Label(window, bg="blue", width=10, height=5)
+label2.place(x=100, y=100)
+
+#label.bind(event, drag_start)
+label.bind("<Button-L>", drag_start) # 2nd is a function
+label.bind("<B1-Motion>", drag_motion)
+
+label2.bind("<Button-L>", drag_start)
+label2.bind("<B1-Motion>", drag_motion)
+
+
+window.mainloop()
+"""
