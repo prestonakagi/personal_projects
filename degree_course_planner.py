@@ -5,8 +5,19 @@ With a Graphic User Interface (GUI), plan a Bachelor's degree classes (not inclu
 from tkinter import *
 # from tkinter import ttk  # for adding tabs to window
 from tkinter import filedialog # for saving a file and opening a file
+import re
+from substring_extraction import extract_multiple_bracketed_subtext
 
-# How get data on degree catalog (SUU Professional Chemistry)? Couldn't use an API. 05OCT26 went to website, looked at source, copied text part listing courses and credits for main part of emphasis . 
+# How get data on degree catalog (SUU Professional Chemistry)? Couldn't use an API. 
+# 05OCT26 went to website, looked at source, copied text part listing courses and 
+# credits for main part of emphasis. 
+
+course_name_pattern = r'View course details for (.*?)" onClick='
+current_path = r"C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_projects\\personal_projects\\"
+with open(current_path + "course_html.txt", "r", encoding="utf-8") as file:
+    file_contents = file.read()
+course_names = extract_multiple_bracketed_subtext(course_name_pattern, file_contents)
+print(f"{course_names=}")
 
 # Save data in instances of a Class for Course.
 """
