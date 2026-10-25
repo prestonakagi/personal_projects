@@ -6,6 +6,8 @@ from tkinter import *
 # from tkinter import ttk  # for adding tabs to window
 from tkinter import filedialog # for saving a file and opening a file
 import re
+from dataclasses import dataclass
+
 from substring_extraction import extract_multiple_bracketed_subtext
 
 # How get data on degree catalog (SUU Professional Chemistry)? Couldn't use an API. 
@@ -39,6 +41,49 @@ Methods:
 get Course (a Class) attribute.
 check if have passed a course
 """
+"""
+Key Rules for @dataclass Fields and Methods:
+• Type Hints are Required: Every field in a dataclass must have a type hint (e.g., radius_meters: float). 
+  If you omit the type hint, the decorator will completely ignore the variable and won't add it to the __init__ constructor.
+• Default Values Last: Just like standard function signatures, any field with a default value 
+  (like notes: Optional[str] = None) must come after all fields that do not have default values.
+• The self Keyword: Methods inside a dataclass behave exactly like normal class methods. 
+  They require self as the first argument to access the fields.
+• Mutable Defaults Warning: If you want a list, dictionary, or set as a default value, 
+  do not use = []. Use field(default_factory=list) instead to avoid bugs where multiple class instances share the exact same list.
+"""
+@dataclass # This built-in decorator eliminates the boilerplates of assigning self.x = x over multiple lines.
+class Course:
+	"""
+	Representing a course in a Bachelor's degree program.
+	"""
+	# Type-hinted attributes (with multi-line formatting)
+	abbreviation_name: str
+	abbreviation_number: int
+	course_name: str
+	co_requisite: str
+	pre_requisites: list[str]
+	can_pre_req_be_concurrent: bool
+	semester_offered: list[str]
+	credits: int
+	fee: float
+	has_passed: bool
+	grid_row: int = 0
+	grid_column: int = 0
+	# notes: Optional[str] = None  # Field with a default value
+
+	# def calculate_momentum(self) -> float:
+	
+	# Wanted to test the dataclass decorator now to maake sure it works. 24OCT26 PA.
+	# def p_method(self):
+	# 	print(f"\nthe dataclass decorator works!")
+
+# tester_course = Course("bio", 101, "Intro to BioloGy", None, ["pr1", "pr2"], False, ["Spring Even", "Fall"], 3, 20.22, True)
+
+# for attribute, value in vars(tester_course).items():
+#     print(f"{attribute}: {value}")
+
+# tester_course.p_method()
 """
 GUI elements might need/want:
 menubar: file: open, save, exit. Edit: update passed courses.
