@@ -61,8 +61,8 @@ class Course:
 	abbreviation_name: str
 	abbreviation_number: int
 	course_name: str
-	co_requisite: str
-	pre_requisites: list[str]
+	co_requisite: 'Course' # or None
+	pre_requisites: list['Course']
 	can_pre_req_be_concurrent: bool
 	semester_offered: list[str]
 	credits: int
@@ -74,6 +74,7 @@ class Course:
 
 	# def calculate_momentum(self) -> float:
 	
+
 	# Wanted to test the dataclass decorator now to maake sure it works. 24OCT26 PA.
 	# def p_method(self):
 	# 	print(f"\nthe dataclass decorator works!")
@@ -98,8 +99,39 @@ User input
 Drag and drop (widgets)
 """
 
-# function that after Course label initially made or drag and dropped checks if pre-requistite is finished or already planned in a past semester.
+home_top_row = 10 # integer
+home_right_end_column = 10 # integer
 
+# function that after Course label drag and dropped, checks if pre-requistite is finished or already planned in a past semester.
+def check_pre_requisites(course_instance: Course):
+	"""
+	After Course label drag and dropped, checks if pre-requistites are finished or already planned in past semester(s).
+
+	Returns a list of two Booleans for 
+	if all pre-requisites are finished and 
+	if all pre-requisites already planned in past semester(s).
+	"""
+	# check if pre-reqs all finished
+
+	not_passed_courses = []
+	# if not all finished, which ones not finished and check if already planned, and display message.
+	if course_instance.pre_requisites != []:
+		for pre_req in course_instance.pre_requisites:
+			if pre_req.has_passed == False:
+				# add abbreviation name and number to a list for display on message box.
+				not_passed_courses.append(f"{pre_req.abbreviation_name} {pre_req.abbreviation_number}")
+				# check pre req grid coordinates to course's grid coordinates
+				if pre_req.grid_column >= course_instance.grid_column:
+					# display message that need to take pre req before course.
+					pass
+				# if pre req in home area
+				elif pre_req.grid_column < home_right_end_column and pre_req.grid_row > home_top_row:
+					pass
+				elif pre_req.grid_column < course_instance.grid_column and pre_req.grid_row > home_top_row and pre_req.has_passed == False:
+					# display message that since did not pass pre req, cannot take course at that semester.
+					pass
+					# return course's label to home area. NOTE: home area should be left and below of all scheduling tables/area.
+					pass
 
 # try a custom class for labels for semester season and year.
 """
@@ -114,6 +146,9 @@ grid_column: int=0
 # function to check if a course dropped into one of its correct season for semester (and even or odd year, if applicable). How do that??
 
 # function to update has_passed attribute (to True) of a course.
+def update_passing_course(course_instance: 'Course'):
+	'''Change a Course's has_passed value to True.'''
+	course_instance.has_passed = True
 
 # Make GUI labels for all not completed courses and have them all displayed (at least when a new file made. If opening an existing file, show any not placed?)
 
