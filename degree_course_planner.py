@@ -15,25 +15,31 @@ from substring_extraction import extract_multiple_bracketed_subtext
 # credits for main part of emphasis. 
 
 course_abbr_and_name_pattern = r'View course details for (.*?)" onClick='
+credit_pattern = r'</a> <strong>(.*?)</strong> Credit\(s\)'
 current_path = r"C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_projects\\personal_projects\\"
 with open(current_path + "course_html.txt", "r", encoding="utf-8") as file:
     file_contents = file.read()
 course_abbr_and_names = extract_multiple_bracketed_subtext(course_abbr_and_name_pattern, file_contents)
+course_credits_str = extract_multiple_bracketed_subtext(credit_pattern, file_contents)
+course_credits = [int(c) for c in course_credits_str]
 """TODO: get patterns and extract for: 
 co-requisite: str
 pre-requisites: list of str
 can_pre-req_be_concurrent: Boolean
 semester_offered: list of str
-credits: int
+credits: int  </a> <strong>4</strong> Credit(s)
 fee: float"""
-print(f"length of course names = {len(course_abbr_and_names)}\n{course_abbr_and_names=}")
+print(f"length of course names = {len(course_abbr_and_names)}\n{course_abbr_and_names=}\n{len(course_credits)}\n{course_credits=}")
 # Pattern in strings in course_abbr_and_names: 'course_abbreviation_name course_abbreviation_number - course_name'
 	# extract abbreviation parts and course name when make instances' values.
 course_dict = {}
-for course in course_abbr_and_names:
+for i, course in enumerate(course_abbr_and_names):
 	parts = course.split() # split strings on space
-	# dictionary key example is "CHEM 1210", value is course name.
-	course_dict[parts[0] + parts[1]] = parts[3]
+	name_joined = " ".join(parts[3:]) # join already split course name
+	# dictionary key example is "CHEM 1210", value is ["course name", credit: int].
+	course_dict[parts[0] + " " + parts[1]] = [name_joined, course_credits[i]]
+
+print(f"\n{course_dict["PHYS 2210"]=}")
 
 # Save data in instances of a Class for Course.
 """
