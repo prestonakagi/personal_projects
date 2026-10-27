@@ -21,7 +21,12 @@ with open(current_path + "course_html.txt", "r", encoding="utf-8") as file:
 course_abbr_and_names = extract_multiple_bracketed_subtext(course_abbr_and_name_pattern, file_contents)
 print(f"length of course names = {len(course_abbr_and_names)}\n{course_abbr_and_names=}")
 # Pattern in strings in course_abbr_and_names: 'course_abbreviation_name course_abbreviation_number - course_name'
-	#TODO lower: extract abbreviation parts and course name when make instances' values.
+	# extract abbreviation parts and course name when make instances' values.
+course_dict = {}
+for course in course_abbr_and_names:
+	parts = course.split() # split strings on space
+	# dictionary key example is "CHEM 1210", value is course name.
+	course_dict[parts[0] + parts[1]] = parts[3]
 
 # Save data in instances of a Class for Course.
 """
