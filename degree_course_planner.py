@@ -19,6 +19,13 @@ current_path = r"C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_pro
 with open(current_path + "course_html.txt", "r", encoding="utf-8") as file:
     file_contents = file.read()
 course_abbr_and_names = extract_multiple_bracketed_subtext(course_abbr_and_name_pattern, file_contents)
+"""TODO: get patterns and extract for: 
+co-requisite: str
+pre-requisites: list of str
+can_pre-req_be_concurrent: Boolean
+semester_offered: list of str
+credits: int
+fee: float"""
 print(f"length of course names = {len(course_abbr_and_names)}\n{course_abbr_and_names=}")
 # Pattern in strings in course_abbr_and_names: 'course_abbreviation_name course_abbreviation_number - course_name'
 	# extract abbreviation parts and course name when make instances' values.
