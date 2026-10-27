@@ -4,7 +4,7 @@ With a Graphic User Interface (GUI), plan a Bachelor's degree classes (not inclu
 
 from tkinter import *
 # from tkinter import ttk  # for adding tabs to window
-from tkinter import filedialog # for saving a file and opening a file
+from tkinter import filedialog, messagebox # for saving a file and opening a file
 import re
 from dataclasses import dataclass
 
@@ -14,12 +14,14 @@ from substring_extraction import extract_multiple_bracketed_subtext
 # 05OCT26 went to website, looked at source, copied text part listing courses and 
 # credits for main part of emphasis. 
 
-course_name_pattern = r'View course details for (.*?)" onClick='
+course_abbr_and_name_pattern = r'View course details for (.*?)" onClick='
 current_path = r"C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_projects\\personal_projects\\"
 with open(current_path + "course_html.txt", "r", encoding="utf-8") as file:
     file_contents = file.read()
-course_names = extract_multiple_bracketed_subtext(course_name_pattern, file_contents)
-print(f"{course_names=}")
+course_abbr_and_names = extract_multiple_bracketed_subtext(course_abbr_and_name_pattern, file_contents)
+print(f"length of course names = {len(course_abbr_and_names)}\n{course_abbr_and_names=}")
+# Pattern in strings in course_abbr_and_names: 'course_abbreviation_name course_abbreviation_number - course_name'
+	#TODO lower: extract abbreviation parts and course name when make instances' values.
 
 # Save data in instances of a Class for Course.
 """
@@ -97,6 +99,7 @@ Labels
 User input
 (Scale or) progress bar
 Drag and drop (widgets)
+message box
 """
 
 home_top_row = 10 # integer
@@ -123,14 +126,21 @@ def check_pre_requisites(course_instance: Course):
 				# check pre req grid coordinates to course's grid coordinates
 				if pre_req.grid_column >= course_instance.grid_column:
 					# display message that need to take pre req before course.
-					pass
+					messagebox.showwarning(
+						title= "Take Pre-requisite Course", 
+						message= f"Need to take pre-requisite course, {pre_req.abbreviation_name} {pre_req.abbreviation_number}, before taking {course_instance.abbreviation_name} {course_instance.abbreviation_number}."
+					)
 				# if pre req in home area
 				elif pre_req.grid_column < home_right_end_column and pre_req.grid_row > home_top_row:
-					pass
+					continue
 				elif pre_req.grid_column < course_instance.grid_column and pre_req.grid_row > home_top_row and pre_req.has_passed == False:
 					# display message that since did not pass pre req, cannot take course at that semester.
-					pass
+					messagebox.showwarning(
+											title= "Failed Pre-requisite Course", 
+											message= f"Need to pass pre-requisite course, {pre_req.abbreviation_name} {pre_req.abbreviation_number}, before taking {course_instance.abbreviation_name} {course_instance.abbreviation_number}."
+										)
 					# return course's label to home area. NOTE: home area should be left and below of all scheduling tables/area.
+					# home area: try 6 labels wide (or 5).
 					pass
 
 # try a custom class for labels for semester season and year.
