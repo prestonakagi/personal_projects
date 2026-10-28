@@ -16,7 +16,22 @@ physics_course = Course(
     22.50, 
     False, 
     grid_row= 1, 
-    grid_column= 1
+    grid_column= 13
+    )
+
+physics2_course = Course(
+    'PHYS', 
+    '2220', 
+    'Physics for Scientists and Engineers II', 
+    None, 
+    [physics_course], 
+    False, 
+    ['Spring'], 
+    4, 
+    33.50, 
+    False, 
+    grid_row= 1, 
+    grid_column= 10
     )
 
 @pytest.mark.parametrize("course_instance", [physics_course])
