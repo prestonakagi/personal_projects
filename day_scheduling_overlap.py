@@ -67,31 +67,49 @@ def find_day_overlap_indexes(day_start_times, day_end_times):
     '''
     groups_of_events = []
     overlapping_events_indexes = []
-    testing_indexes_thru_for_loop = []
-    # TODO: last index is not being tested.
     for i in range(len(day_start_times) - 1):
         if day_start_times[i + 1] <= day_start_times[i] <= day_end_times[i + 1] and day_start_times[i + 1] <= day_end_times[i] <= day_end_times[i + 1]:
             overlapping_events_indexes.append(i)
             overlapping_events_indexes.append(i + 1)
-            testing_indexes_thru_for_loop.append(i)
         elif day_start_times[i] <= day_start_times[i + 1] <= day_end_times[i]:
             overlapping_events_indexes.append(i)
             overlapping_events_indexes.append(i + 1)
-            testing_indexes_thru_for_loop.append(i)
         elif day_start_times[i] <= day_end_times[i + 1] <= day_end_times[i]:
             overlapping_events_indexes.append(i)
             overlapping_events_indexes.append(i + 1)
-            testing_indexes_thru_for_loop.append(i)
         else:
             # make overlapping_events_indexes into a set, then a list.
             unique_overlapping_events_indexes = list(set(overlapping_events_indexes))
             groups_of_events.append(unique_overlapping_events_indexes)
             overlapping_events_indexes = [] # reset indexes list
-            testing_indexes_thru_for_loop.append(i)
 
-    groups_of_events.append(testing_indexes_thru_for_loop)
-    
-    return groups_of_events
+    # compare second last start time to last start time and potentially append to overlapping_events_indexes
+    if day_start_times[-1] <= day_start_times[-2] <= day_end_times[-1] and day_start_times[-1] <= day_end_times[-2] <= day_end_times[-1]:
+        overlapping_events_indexes.extend([(len(day_start_times) - 2), (len(day_start_times) - 1)])
+        unique_overlapping_events_indexes = sorted(list(set(overlapping_events_indexes)))
+        groups_of_events.append(unique_overlapping_events_indexes)
+        overlapping_events_indexes = [] # reset indexes list
+    elif day_start_times[-2] <= day_start_times[-1] <= day_end_times[-2]:
+        overlapping_events_indexes.extend([(len(day_start_times) - 2), (len(day_start_times) - 1)])
+        unique_overlapping_events_indexes = sorted(list(set(overlapping_events_indexes)))
+        groups_of_events.append(unique_overlapping_events_indexes)
+        overlapping_events_indexes = [] # reset indexes list
+    elif day_start_times[-2] <= day_end_times[-1] <= day_end_times[-2]:
+        overlapping_events_indexes.extend([(len(day_start_times) - 2), (len(day_start_times) - 1)])
+        unique_overlapping_events_indexes = sorted(list(set(overlapping_events_indexes)))
+        groups_of_events.append(unique_overlapping_events_indexes)
+        overlapping_events_indexes = [] # reset indexes list
+    # append to overlapping_events_indexes regardless if entered any of above conditionals.
+    else:
+        # make overlapping_events_indexes into a set, then a list, then sorted the list.
+        unique_overlapping_events_indexes = sorted(list(set(overlapping_events_indexes)))
+        groups_of_events.append(unique_overlapping_events_indexes)
+        overlapping_events_indexes = [] # reset indexes list
+
+    # Remove empty inner lists: an empty list [] evaluates to False, while a list with elements evaluates to True
+    clean_groups_of_events = [x for x in groups_of_events if x]
+   
+    return clean_groups_of_events
 
 day_one_overlap_indexes = find_day_overlap_indexes(time_lists[0], time_lists[1])
 print(f"\n{day_one_overlap_indexes=}")
