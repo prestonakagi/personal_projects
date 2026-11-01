@@ -49,10 +49,57 @@ for i, j in zip(range(0, (len(days_list) + 1)), range(1, (len(days_list) + 1))):
 day_one_count = len(time_lists[0])
 day_two_count = len(time_lists[2])
 day_three_count = len(time_lists[4])
-# print(f"\n{day_one_count=} {time_lists[0]=}\n{day_two_count=} {time_lists[2]=}\n{day_three_count=} {time_lists[4]=}")
+print(f"\n{day_one_count=} {time_lists[0]=}\n{day_two_count=} {time_lists[2]=}\n{day_three_count=} {time_lists[4]=}")
 
 # bracket indexes of each day
+# day_one_overlap_indexes, day_two_overlap_indexes, day_three_overlap_indexes = [], [], []
 
+def find_day_overlap_indexes(day_start_times, day_end_times):
+    '''
+    csv file should have each day's events' times in ascending order.
+    Compare start and end times of events in a day 
+    and return a list of lists of indexes, 
+    and each inner list contains indexes of events that overlap each other.
+    
+    Parameters:
+    day_start_times: list of integers of events' start times in 24 hr format
+    day_end_times: list of integers of events' end times in 24 hr format    
+    '''
+    groups_of_events = []
+    overlapping_events_indexes = []
+    testing_indexes_thru_for_loop = []
+    # TODO: last index is not being tested.
+    for i in range(len(day_start_times) - 1):
+        if day_start_times[i + 1] <= day_start_times[i] <= day_end_times[i + 1] and day_start_times[i + 1] <= day_end_times[i] <= day_end_times[i + 1]:
+            overlapping_events_indexes.append(i)
+            overlapping_events_indexes.append(i + 1)
+            testing_indexes_thru_for_loop.append(i)
+        elif day_start_times[i] <= day_start_times[i + 1] <= day_end_times[i]:
+            overlapping_events_indexes.append(i)
+            overlapping_events_indexes.append(i + 1)
+            testing_indexes_thru_for_loop.append(i)
+        elif day_start_times[i] <= day_end_times[i + 1] <= day_end_times[i]:
+            overlapping_events_indexes.append(i)
+            overlapping_events_indexes.append(i + 1)
+            testing_indexes_thru_for_loop.append(i)
+        else:
+            # make overlapping_events_indexes into a set, then a list.
+            unique_overlapping_events_indexes = list(set(overlapping_events_indexes))
+            groups_of_events.append(unique_overlapping_events_indexes)
+            overlapping_events_indexes = [] # reset indexes list
+            testing_indexes_thru_for_loop.append(i)
+
+    groups_of_events.append(testing_indexes_thru_for_loop)
+    
+    return groups_of_events
+
+day_one_overlap_indexes = find_day_overlap_indexes(time_lists[0], time_lists[1])
+print(f"\n{day_one_overlap_indexes=}")
+# TODO: day two should have a second group of [6, 7, 8] but doesn't (31OCT26).
+day_two_overlap_indexes = find_day_overlap_indexes(time_lists[2], time_lists[3])
+print(f"\n{day_two_overlap_indexes=}")
+day_three_overlap_indexes = find_day_overlap_indexes(time_lists[4], time_lists[5])
+print(f"\n{day_three_overlap_indexes=}")
 
 """
 match #'Day':
