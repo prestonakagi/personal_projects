@@ -151,3 +151,38 @@ day_two_priority_event_indexes = get_overlap_highest_priority(raw_events, day_tw
 # TODO: when printing or gathering from raw_events, add one to each of ..._priority_event_indexes to skip header row.
 day_one_priority_event_indexes = get_overlap_highest_priority(raw_events, day_one_overlap_indexes)
 day_three_priority_event_indexes = get_overlap_highest_priority(raw_events, day_three_overlap_indexes)
+
+# for each day and each overlapping events, print all overlapping events' names and then the event with highest priority and all its info.
+def display_overlapping_events_and_highest_priorities(raw_events, day_overlap_indexes, overlap_highest_priorities, date: str):
+    '''
+    For each day and each overlapping events, 
+    print all overlapping events' names and 
+    then the event with highest priority and all its info.
+
+    Parameters:
+    raw_events: read_and_process_csv function's list of lists
+    day_overlap_indexes: find_day_overlap_indexes functions's list of lists
+    overlap_highest_priorities: get_overlap_highest_priority functions's list of indexes
+    date: string of date
+    '''
+    # for raw_events's outer list, add one to each of indexes to skip header row.
+    overlapping_events_names = [raw_events[n + 1][NAME_INDEX] for group in day_overlap_indexes for n in group]
+    highest_priorities_events = [] # will be list of str
+    priority_event_info = ""
+    for row in overlap_highest_priorities:
+        for i in range(7):
+            priority_event_info += (raw_events[row + 1][i] + "  ")
+        highest_priorities_events.append(priority_event_info)
+
+    print(f"\nOn {date}, the following events overlap:")
+    for event in overlapping_events_names:
+        print(f"{event}")
+    print(f"\nThe following events in respective overlaps have top priority:")
+    for i in range(7):
+        print(f"{raw_events[0][i]}", end=" ") # header row except priority
+    for whole_event in highest_priorities_events:
+        print(f"\n{whole_event}")
+
+day_one_priorities_display = display_overlapping_events_and_highest_priorities(raw_events, day_one_overlap_indexes, day_one_priority_event_indexes, "03DEC26")
+day_two_priorities_display = display_overlapping_events_and_highest_priorities(raw_events, day_two_overlap_indexes, day_two_priority_event_indexes, "04DEC26")
+day_three_priorities_display = display_overlapping_events_and_highest_priorities(raw_events, day_three_overlap_indexes, day_three_priority_event_indexes, "05DEC26")
