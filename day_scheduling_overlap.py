@@ -1,5 +1,5 @@
 """See if any overlaps in events during a day.
-If there are, then list those events by priority."""
+If there are, then list highest priority of each group of overlapping events."""
 
 from datetime import datetime as dt
 # import csv
@@ -113,18 +113,41 @@ def find_day_overlap_indexes(day_start_times, day_end_times):
 
 day_one_overlap_indexes = find_day_overlap_indexes(time_lists[0], time_lists[1])
 print(f"\n{day_one_overlap_indexes=}")
-# TODO: day two should have a second group of [6, 7, 8] but doesn't (31OCT26).
 day_two_overlap_indexes = find_day_overlap_indexes(time_lists[2], time_lists[3])
 print(f"\n{day_two_overlap_indexes=}")
 day_three_overlap_indexes = find_day_overlap_indexes(time_lists[4], time_lists[5])
 print(f"\n{day_three_overlap_indexes=}")
 
-"""
-match #'Day':
+# use overlap indexes to iterate thru raw events and list priority numbers
+def get_overlap_highest_priority(raw_events, day_overlap_indexes):
+    '''
+    For one day, for each group of overlapping events, finds lowest number of priority (highest priority) and 
+    returns raw events index for the event with highest priority.
 
-case
+    Parameters:
+    raw_events: read_and_process_csv function's list of lists
+    day_overlap_indexes: find_day_overlap_indexes functions's list of lists
 
-case
+    Return: list of integer indexes that have highest priority of each overlap group
+    '''
+    highest_priority_indexes = []
+    groups_priorities = []
 
-case
-"""
+    for i in range(len(day_overlap_indexes)):
+        for overlap_index in day_overlap_indexes[i]:
+            # add 1 to overlap_index to skip header row
+            groups_priorities.append(raw_events[overlap_index + 1][DAILY_PRIORITY_INDEX])
+        # get minimum value in priorities list, then get its index
+        lowest_number_priority = min(groups_priorities)
+        lowest_number_priority_index = groups_priorities.index(lowest_number_priority)
+        highest_priority_indexes.append(day_overlap_indexes[i][lowest_number_priority_index])
+        # reset groups_priorities
+        groups_priorities = []
+
+    return highest_priority_indexes
+
+day_two_priority_event_indexes = get_overlap_highest_priority(raw_events, day_two_overlap_indexes)
+# print(f"\n{day_two_priority_event_indexes=}")
+# TODO: when printing or gathering from raw_events, add one to each of ..._priority_event_indexes to skip header row.
+day_one_priority_event_indexes = get_overlap_highest_priority(raw_events, day_one_overlap_indexes)
+day_three_priority_event_indexes = get_overlap_highest_priority(raw_events, day_three_overlap_indexes)
