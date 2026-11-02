@@ -193,9 +193,10 @@ def display_overlapping_events_and_highest_priorities(raw_events, day_overlap_in
     print(f"\nOn {date}, the following events overlap:")
     for event in overlapping_events_names:
         print(f"{event}")
-    print(f"\nThe following events in respective overlaps have top priority:")
-    for i in range(7):
-        print(f"{raw_events[0][i]}", end=" ") # header row except priority
+    print(f"\nThe following events in respective overlaps have top priority (last 3 fields are Room, Nickname of Room, Types):")
+    # print(f"{raw_events[0][0]:<{len(max(overlapping_events_names))}}", end=" ") # Name header
+    # for i in range(1, 7):
+    #     print(f"{raw_events[0][i]:<{15}}", end=" ") # header row except priority
     for whole_event in highest_priorities_events:
         print(f"\n{whole_event}")
 
