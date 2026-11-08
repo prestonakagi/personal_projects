@@ -1,6 +1,7 @@
 import pytest
 from tkinter import *
 from tkinter import filedialog, messagebox
+from unittest.mock import patch
 
 from degree_course_planner import Course, check_pre_requisites, update_passing_course
 
@@ -40,4 +41,17 @@ def test_update_passing_course(course_instance):
     assert course_instance.has_passed is True
 
 # NOTE: pytest, esp. parametrize, does not need test functions to be called to find and run.
-# test_update_passing_course(physics_course)
+
+@pytest.mark.parametrize("course_instance2", [physics2_course])
+def test_check_pre_requisites(course_instance2):
+    # check first conditional. Test for messagebox.showwarning
+    with patch("tkinter.messagebox.showwarning") as mock_warning:
+        check_pre_requisites(course_instance2)
+
+        # Assert that showwarning was called once
+        mock_warning.assert_called_once()
+
+        # Assert exact arguments passed: (title, message)
+        mock_warning.assert_called_once_with(
+            "Take Pre-requisite Course", f"Need to take pre-requisite course, {course_instance2.pre_req[0].abbreviation_name} {course_instance2.pre_req[0].abbreviation_number}, before taking {course_instance2.abbreviation_name} {course_instance2.abbreviation_number}."
+        )
