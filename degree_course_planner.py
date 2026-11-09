@@ -249,11 +249,27 @@ menubar.add_cascade(label="Edit", menu=editMenu)
 
 """
 # grid.  (just for notes, widget.pack() adds widget to window.)
-# widget.grid(row=0, column=0, columnspan=int)
-
+# widget.grid(row=0, column=0, columnspan=int, padx=(int, int), pady=(int, int)) # padx=(int px left space, int px right space), pady=(int px top space, int px bottom space)
+	# sticky="nsew" Expands to fill its cell
 # Label: bd is border width. bg is background color. fg is text color. If use an image, use compound= 'top, left, etc".
 Label(window, text="string", font=("font_name", size:int, "bold, etc"), fg="color name or hexadecimal", bg="color", bd=int, pad or padx or pady= int)
+"""
+# Give Row or Column 0 and Row or Column 1 equal weight (1) so they expand on resize
+# Row or Column 0 also gets weight so widgets fill vertical or horizontal space if height or horizontal changes
+# window.columnconfigure(0, weight=1)
+# window.columnconfigure(1, weight=1)
+# window.rowconfigure(0, weight=1)
+# window.rowconfigure(1, weight=1)
 
+
+t_label2 = Label(window, text="Test Label 2", font=("Arial", 20, "bold"), bg="yellow", bd=5)
+# t_label2.pack()
+t_label2.grid(row=1, column=3)
+# t_label2.grid(row=1, column=3, sticky="nsew")
+t_label = Label(window, text="Test Label", font=("Arial", 20, "bold"), bg="green", bd=5)
+t_label.grid(row=1, column=1, padx=(10, 20))
+# t_label.grid(row=1, column=1, padx=(10, 20), sticky="nsew") # padx=(int px left space, int px right space)
+"""
 # Entry is user input textbox for single line.
 Entry(window)
 entry_variable.insert(0, "string") # default text
