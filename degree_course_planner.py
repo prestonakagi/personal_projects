@@ -144,9 +144,10 @@ def check_pre_requisites(course_instance: Course):
 				# check pre req grid coordinates to course's grid coordinates
 				if pre_req.grid_column >= course_instance.grid_column:
 					# display message that need to take pre req before course.
+					# messagebox.showwarning(title, message)
 					messagebox.showwarning(
-						title= "Take Pre-requisite Course", 
-						message= f"Need to take pre-requisite course, {pre_req.abbreviation_name} {pre_req.abbreviation_number}, before taking {course_instance.abbreviation_name} {course_instance.abbreviation_number}."
+						"Take Pre-requisite Course", 
+						f"Need to take pre-requisite course, {pre_req.abbreviation_name} {pre_req.abbreviation_number}, before taking {course_instance.abbreviation_name} {course_instance.abbreviation_number}."
 					)
 				# if pre req in home area
 				elif pre_req.grid_column < home_right_end_column and pre_req.grid_row > home_top_row:
@@ -154,8 +155,8 @@ def check_pre_requisites(course_instance: Course):
 				elif pre_req.grid_column < course_instance.grid_column and pre_req.grid_row > home_top_row and pre_req.has_passed == False:
 					# display message that since did not pass pre req, cannot take course at that semester.
 					messagebox.showwarning(
-											title= "Failed Pre-requisite Course", 
-											message= f"Need to pass pre-requisite course, {pre_req.abbreviation_name} {pre_req.abbreviation_number}, before taking {course_instance.abbreviation_name} {course_instance.abbreviation_number}."
+											"Failed Pre-requisite Course", 
+											f"Need to pass pre-requisite course, {pre_req.abbreviation_name} {pre_req.abbreviation_number}, before taking {course_instance.abbreviation_name} {course_instance.abbreviation_number}."
 										)
 					# return course's label to home area. NOTE: home area should be left and below of all scheduling tables/area.
 					# home area: try 6 labels wide (or 5).
@@ -307,4 +308,7 @@ label2.bind("<Button-1>", drag_start)
 label2.bind("<B1-Motion>", drag_motion)
 
 
-window.mainloop()
+# window.mainloop()
+
+# if __name__ == "__main__":
+# 	pass

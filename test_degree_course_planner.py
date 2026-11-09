@@ -53,5 +53,8 @@ def test_check_pre_requisites(course_instance2):
 
         # Assert exact arguments passed: (title, message)
         mock_warning.assert_called_once_with(
-            "Take Pre-requisite Course", f"Need to take pre-requisite course, {course_instance2.pre_req[0].abbreviation_name} {course_instance2.pre_req[0].abbreviation_number}, before taking {course_instance2.abbreviation_name} {course_instance2.abbreviation_number}."
+            "Take Pre-requisite Course", f"Need to take pre-requisite course, {course_instance2.pre_requisites[0].abbreviation_name} {course_instance2.pre_requisites[0].abbreviation_number}, before taking {course_instance2.abbreviation_name} {course_instance2.abbreviation_number}."
         )
+
+# print(f"\n{physics2_course.pre_requisites=}")
+# test_check_pre_requisites(physics2_course)
