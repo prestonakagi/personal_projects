@@ -261,7 +261,7 @@ Label(window, text="string", font=("font_name", size:int, "bold, etc"), fg="colo
 # window.rowconfigure(0, weight=1)
 # window.rowconfigure(1, weight=1)
 
-
+"""
 t_label2 = Label(window, text="Test Label 2", font=("Arial", 20, "bold"), bg="yellow", bd=5)
 # t_label2.pack()
 t_label2.grid(row=1, column=3)
@@ -269,6 +269,7 @@ t_label2.grid(row=1, column=3)
 t_label = Label(window, text="Test Label", font=("Arial", 20, "bold"), bg="green", bd=5)
 t_label.grid(row=1, column=1, padx=(10, 20))
 # t_label.grid(row=1, column=1, padx=(10, 20), sticky="nsew") # padx=(int px left space, int px right space)
+"""
 """
 # Entry is user input textbox for single line.
 Entry(window)
@@ -289,7 +290,7 @@ text_label = Label(window, textvariable=text).pack()
 # make a function for the edit Update Passed Courses that one thing it does is update progress bar. In that function, need:
 percent.set(str(int(number_passed_courses_or_credits / total_number_of_courses_or_credits * 100)) + "%")
 text.set(str(number_passed_courses_or_credits) + "/" + str(total_number_of_courses_or_credits) + " total credits completed" OR " total number of courses planned"
-
+"""
 # Drag and drop
 # following for more than one Label
 label = Label(window, bg="red", width=10, height=5)
@@ -299,13 +300,11 @@ label2 = Label(window, bg="blue", width=10, height=5)
 label2.place(x=100, y=100)
 
 #label.bind(event, drag_start)
-label.bind("<Button-L>", drag_start) # 2nd is a function
+label.bind("<Button-1>", drag_start) # 2nd is a function
 label.bind("<B1-Motion>", drag_motion)
 
-label2.bind("<Button-L>", drag_start)
+label2.bind("<Button-1>", drag_start)
 label2.bind("<B1-Motion>", drag_motion)
 
 
-window.mainloop()
-"""
 window.mainloop()
