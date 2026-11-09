@@ -214,7 +214,11 @@ from tkinter import *
 window = Tk()
 window.geometry("IntxInt")
 window.title("")
-
+"""
+window = Tk()
+window.geometry("1000x500")
+window.title("Degree Planner")
+"""
 '''
 # Notebook widget for adding tabs to a window
 notebook_variable = ttk.Notebook(window)  # widget that manages a collection of windows/displays
@@ -226,24 +230,24 @@ notebook.pack(expand=True, fill="both") # expand to fill any space not otherwise
 # Example to put a widget in a tab
 # Label(tab1, text="Wazup", width=50, height=25).pack()
 '''
-
+"""
 # Menu bar
-menubar Menu(window)
+menubar = Menu(window)
 window.config(menu=menubar)
 
 fileMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="File", menu=fileMenu)
-fileMenu.add_command(label="Open", command=function_name_only)
-fileMenu.add_command(label="Save", command=function_name_only)
+# fileMenu.add_command(label="Open", command=function_name_only) # command=function_name_only
+# fileMenu.add_command(label="Save", command=function_name_only) # TODO
 # top - - - -  is called tearoff
 fileMenu.add_separator()
 fileMenu.add_command(label="Exit", command=quit)  # leave as quit
 
 editMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Edit", menu=editMenu)
-editMenu.add_command(label="Update Passed Courses", command=function_name_only)
+# editMenu.add_command(label="Update Passed Courses", command=function_name_only)
 
-
+"""
 # grid.  (just for notes, widget.pack() adds widget to window.)
 # widget.grid(row=0, column=0, columnspan=int)
 
@@ -288,3 +292,4 @@ label2.bind("<B1-Motion>", drag_motion)
 
 window.mainloop()
 """
+window.mainloop()

@@ -45,7 +45,7 @@ def test_update_passing_course(course_instance):
 @pytest.mark.parametrize("course_instance2", [physics2_course])
 def test_check_pre_requisites(course_instance2):
     # check first conditional. Test for messagebox.showwarning
-    with patch("tkinter.messagebox.showwarning") as mock_warning:
+    with patch("degree_course_planner.messagebox.showwarning") as mock_warning:
         check_pre_requisites(course_instance2)
 
         # Assert that showwarning was called once
