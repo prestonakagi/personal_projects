@@ -123,6 +123,18 @@ message box
 home_top_row = 10 # integer
 home_right_end_column = 10 # integer
 
+# function to return a label to home area
+def assign_home_grid_numbers():
+	"""
+	Change a Course instance's grid numbers to return it to the home area in GUI.
+	Try put grid numbers so at top left of home area.
+	Then add 1 to all, already in home area, other instances' column number, 
+	and if column number equals 6, then add 1 to row number and set column number to 0.
+
+	Parameters:
+
+	"""
+
 # function that after Course label drag and dropped, checks if pre-requistite is finished or already planned in a past semester.
 def check_pre_requisites(course_instance: Course):
 	"""

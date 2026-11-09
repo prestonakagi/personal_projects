@@ -42,6 +42,10 @@ def test_update_passing_course(course_instance):
 
 # NOTE: pytest, esp. parametrize, does not need test functions to be called to find and run.
 
+'''# 3. Test execution with correct mock path
+# NOTE: Replace 'main_file' with your actual module path if it isn't 'main_file.py'
+@patch("main_file.messagebox.showwarning")
+def test_check_pre_requisites(mock_warning, physics2_course):'''
 @pytest.mark.parametrize("course_instance2", [physics2_course])
 def test_check_pre_requisites(course_instance2):
     # check first conditional. Test for messagebox.showwarning
