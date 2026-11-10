@@ -1,9 +1,11 @@
 # from personal expenses as a CSV, address blank values and analyze expenses.
 # Calculate weekly total Cost.
+# Calculate statistics for certain category.
 
 from csv_read_process import read_and_process_csv
 from datetime import datetime as dt
 import pandas as pd
+import numpy as np
 
 file_csv_path = "C:\\Users\\prest\\OneDrive\\Documents\\AIO Python\\personal_projects\\personal_projects\\Expenses Aggregated Copy"
 cleaned_entries = read_and_process_csv(file_csv_path)
@@ -127,5 +129,39 @@ test_weekly_cost_df = test_df.groupby(pd.Grouper(key='Date', freq='W'))['Cost'].
 # print(f"\n{test_df}")
 print(f"\n{test_weekly_cost_df}")
 '''
+
+# make a new column for one category to aggregate costs of that category from beginning of the year to end of most current month
+category_to_query = "Restaraunts"
+# df[f"{category_to_query} Costs"] = np.where(df["Category"] == "Restaraunts", df["Cost"], 0)
+# Use this if you only want to populate the new column for the rows that meet the condition, leaving the rest completely blank (NaN).
+# df.loc[df["Category"] == "Category Name for Conditional", "new column name"] = df["Category value to add to new column if conditional is True"]
+df.loc[df["Category"] == "Restaraunts", f"{category_to_query} Cost"] = df["Cost"]
+print(f"\n{df[f"{category_to_query} Cost"]}")
+
+# calculate quartiles, mode, and mean of column
+def calculate_statistics(df, column_name: str):
+    """
+    Calculates quartiles, minimum, maximum, mode(s), and mean of a dataframe's column.
+
+    Parameters:
+    df: Dataframe
+    column_name: string of dataframe column name.
+
+    Return list of lists of minimum, Q1, median, Q3, maximum, mode(s), and mean, in that order.
+    """
+    minimum = [min(df[column_name])] # TODO: how not get NaN?
+    quartiles = df[column_name].quantile([0.25, 0.50, 0.75])
+    maximum = [max(df[column_name])] # TODO: how not get NaN?
+    modes = list(df[column_name].mode())
+    average = [df[column_name].mean()]
+    
+    return [minimum, quartiles, maximum, modes, average]
+
+
+restaraunt_statistics= calculate_statistics(df, f"{category_to_query} Cost")
+# print(f"\n{restaraunt_statistics=}")
+for stat in restaraunt_statistics:
+    print(f"\n{stat=}")
+
 
 print("\nGood end!")
