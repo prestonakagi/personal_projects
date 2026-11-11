@@ -136,7 +136,7 @@ category_to_query = "Restaraunts"
 # Use this if you only want to populate the new column for the rows that meet the condition, leaving the rest completely blank (NaN).
 # df.loc[df["Category"] == "Category Name for Conditional", "new column name"] = df["Category value to add to new column if conditional is True"]
 df.loc[df["Category"] == "Restaraunts", f"{category_to_query} Cost"] = df["Cost"]
-print(f"\n{df[f"{category_to_query} Cost"]}")
+# print(f"\n{df[f"{category_to_query} Cost"]}")
 
 # calculate quartiles, mode, and mean of column
 def calculate_statistics(df, column_name: str):
@@ -147,21 +147,31 @@ def calculate_statistics(df, column_name: str):
     df: Dataframe
     column_name: string of dataframe column name.
 
-    Return list of lists of minimum, Q1, median, Q3, maximum, mode(s), and mean, in that order.
+    Return dictionary of minimum (numpy.float64), 
+    panda.Series of Q1, median, Q3, 
+    maximum (numpy.float64), 
+    list of mode(s) (numpy.float64), and 
+    mean (numpy.float64), in that order.
     """
-    minimum = [min(df[column_name])] # TODO: how not get NaN?
+    stats_dict = {}
+    minimum = df[column_name].min()
     quartiles = df[column_name].quantile([0.25, 0.50, 0.75])
-    maximum = [max(df[column_name])] # TODO: how not get NaN?
+    maximum = df[column_name].max()
     modes = list(df[column_name].mode())
-    average = [df[column_name].mean()]
+    average = df[column_name].mean()
+
+    stats_labels = ["minimum", "quartiles", "maximum", "mode(s)", "mean"]
+    values = [minimum, quartiles, maximum, modes, average]
+    for label, value in zip(stats_labels, values):
+        stats_dict[label] = value
     
-    return [minimum, quartiles, maximum, modes, average]
+    return stats_dict
 
 
 restaraunt_statistics= calculate_statistics(df, f"{category_to_query} Cost")
 # print(f"\n{restaraunt_statistics=}")
-for stat in restaraunt_statistics:
-    print(f"\n{stat=}")
+for key, value in restaraunt_statistics.items():
+    print(f"\n{key}: {value}  {type(value)}")
 
 
 print("\nGood end!")
